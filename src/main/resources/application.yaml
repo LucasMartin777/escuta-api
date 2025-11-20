@@ -1,3 +1,18 @@
 spring:
   application:
     name: escuta
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/escuta_db
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  error:
+    include-stacktrace: never

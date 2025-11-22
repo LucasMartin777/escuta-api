@@ -38,9 +38,8 @@ public class UserLoginEntity implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "perfil_id")
-    private UserPerfilEntity userPerfilEntity;
+    @OneToOne(mappedBy = "userLogin")
+    private UserPerfilEntity perfil;
 
 
     @Override

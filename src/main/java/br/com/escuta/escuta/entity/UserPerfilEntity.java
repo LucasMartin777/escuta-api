@@ -24,8 +24,9 @@ public class UserPerfilEntity {
 
     private String description;
 
-    @OneToOne(mappedBy = "userPerfilEntity")
-    private UserLoginEntity userLoginEntity;
+    @OneToOne
+    @JoinColumn(name = "user_login_id", unique = true)
+    private UserLoginEntity userLogin;
 
 
 }

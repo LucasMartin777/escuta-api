@@ -1,14 +1,5 @@
 package br.com.escuta.escuta.controller.request;
 
-import jakarta.validation.constraints.NotBlank;
+public record UserLoginRequest(String email, String password) {
 
-public record UserLoginRequest(
-
-        @NotBlank
-        String email,
-
-        @NotBlank
-        String password
-
-) {
 }

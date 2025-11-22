@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/login")
 
 public class AuthenticationController {
 
@@ -27,13 +27,19 @@ public class AuthenticationController {
     private  TokenService tokenService;
 
     @PostMapping()
+
     public ResponseEntity efetuarLogin(@RequestBody @Valid UserLoginRequest request) {
-        var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-        var authentication = manager.authenticate(token);
+        try {
+                var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+                var authentication = manager.authenticate(token);
 
-        var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
+                var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
 
-        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
-
+                return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
     }
 }
+

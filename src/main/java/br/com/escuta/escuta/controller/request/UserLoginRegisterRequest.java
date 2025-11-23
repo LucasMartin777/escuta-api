@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public record UserLoginRequest(
+public record UserLoginRegisterRequest(
 
         @NotBlank
         String userName,
@@ -25,7 +25,6 @@ public record UserLoginRequest(
         Date dateOfBirth,
 
         @NotNull
-        @PastOrPresent
         LocalDateTime createdAt
 
 

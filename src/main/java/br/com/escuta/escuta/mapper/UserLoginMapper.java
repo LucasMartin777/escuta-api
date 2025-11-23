@@ -1,10 +1,11 @@
 package br.com.escuta.escuta.mapper;
 
-import br.com.escuta.escuta.controller.request.UserLoginRequest;
+import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
+import br.com.escuta.escuta.controller.response.UserLoginRegisterResponse;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 
 public class UserLoginMapper {
-    public static UserLoginEntity toEntity(UserLoginRequest request) {
+    public static UserLoginEntity toEntity(UserLoginRegisterRequest request) {
         return UserLoginEntity.builder()
                 .userName(request.userName())
                 .email(request.email())
@@ -13,5 +14,17 @@ public class UserLoginMapper {
                 .dateOfBirth(request.dateOfBirth())
                 .createdAt(request.createdAt())
                 .build();
+    }
+
+    public static UserLoginRegisterResponse toDetaislResponse(UserLoginEntity userLoginEntity) {
+        return UserLoginRegisterResponse.builder()
+                .id(userLoginEntity.getId())
+                .userName(userLoginEntity.getUsername())
+                .email(userLoginEntity.getEmail())
+                .cpf(userLoginEntity.getCpf())
+                .dateOfBirth(userLoginEntity.getDateOfBirth())
+                .createdAt(userLoginEntity.getCreatedAt())
+                .build();
+
     }
 }

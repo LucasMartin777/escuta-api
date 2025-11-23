@@ -1,6 +1,7 @@
 package br.com.escuta.escuta.controller;
 
 
+import br.com.escuta.escuta.controller.request.UserLoginAuthRequest;
 import br.com.escuta.escuta.controller.request.UserLoginRequest;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.security.DadosTokenJWT;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 
 public class AuthenticationController {
 
@@ -26,20 +27,19 @@ public class AuthenticationController {
     @Autowired
     private  TokenService tokenService;
 
-    @PostMapping()
+    @PostMapping("/login")
+    public ResponseEntity efetuarLogin(@RequestBody @Valid UserLoginAuthRequest request) {
 
+            var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+            var authentication = manager.authenticate(token);
+
+            var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
+
+            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+    }
+    @PostMapping("/register")
     public ResponseEntity efetuarLogin(@RequestBody @Valid UserLoginRequest request) {
-        try {
-                var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-                var authentication = manager.authenticate(token);
 
-                var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
 
-                return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
     }
 }
-

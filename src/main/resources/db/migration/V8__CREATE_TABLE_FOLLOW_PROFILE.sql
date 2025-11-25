@@ -1,7 +1,7 @@
 CREATE TABLE FOLLOW_PROFILE (
     follower_id BIGINT NOT NULL,
     following_id BIGINT NOT NULL,
-    follow_date DATE DEFAULT CURRENT_DATE,
+    follow_date DATE,
 
     PRIMARY KEY (follower_id, following_id),
 

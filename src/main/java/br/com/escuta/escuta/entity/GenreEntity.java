@@ -1,4 +1,26 @@
 package br.com.escuta.escuta.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "GENRE")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class GenreEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "genre")
+    private List<MusicEntity> musics;
+
 }

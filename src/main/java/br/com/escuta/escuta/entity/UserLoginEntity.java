@@ -25,6 +25,7 @@ public class UserLoginEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_name")
     private String userName;
 
     private String email;
@@ -33,6 +34,7 @@ public class UserLoginEntity implements UserDetails {
 
     private String cpf;
 
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @CreationTimestamp

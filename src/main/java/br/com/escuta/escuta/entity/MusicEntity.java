@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "MUSIC")
 @Entity
@@ -20,9 +21,17 @@ public class MusicEntity {
     private Long id;
 
     private String name;
+
+    @Column(name = "audio_url")
     private String audioUrl;
+
     private LocalDate releaseDate;
+
+    @Column(name = "single_cover")
     private String singleCover;
+
+    @ManyToMany(mappedBy = "musics")
+    private List<PlaylistEntity> playlists;
 
 
     @ManyToOne

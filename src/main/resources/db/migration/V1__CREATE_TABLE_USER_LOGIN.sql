@@ -5,5 +5,5 @@ CREATE TABLE USER_LOGIN(
     password VARCHAR(255) NOT NULL,
     cpf VARCHAR(20) NOT NULL,
     date_of_birth DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATE
 );

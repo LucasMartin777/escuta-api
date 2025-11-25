@@ -5,6 +5,7 @@ import br.com.escuta.escuta.controller.response.UserLoginRegisterResponse;
 import br.com.escuta.escuta.entity.UserPerfilEntity;
 import br.com.escuta.escuta.mapper.UserLoginMapper;
 import br.com.escuta.escuta.repository.UserLoginRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UserLoginRegisterService {
     private final UserLoginRepository userLoginRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserLoginRegisterResponse register(UserLoginRegisterRequest request) {
 
         var userLogin = UserLoginMapper.toEntity(request);

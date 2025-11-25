@@ -38,8 +38,18 @@ public class UserLoginEntity implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "userLogin",cascade =  CascadeType.ALL)
+    @OneToOne(mappedBy = "userLogin", cascade = CascadeType.ALL)
     private UserPerfilEntity perfil;
+
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
+    private List<MusicEntity> musics;
+
+
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
+    private List<AlbumEntity> albums;
+
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
+    private List<PlaylistEntity> playlists;
 
 
     @Override

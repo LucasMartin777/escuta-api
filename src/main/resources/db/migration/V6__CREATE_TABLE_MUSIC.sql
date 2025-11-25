@@ -2,7 +2,7 @@ CREATE TABLE MUSIC (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     audio_url VARCHAR(500) NOT NULL,
-    release_date DATE DEFAULT CURRENT_DATE,
+    release_date DATE,
     single_cover VARCHAR(500),
     login_id BIGINT NOT NULL,
     genre_id BIGINT,

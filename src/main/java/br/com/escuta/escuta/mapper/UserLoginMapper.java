@@ -25,6 +25,5 @@ public class UserLoginMapper {
                 .dateOfBirth(userLoginEntity.getDateOfBirth())
                 .createdAt(userLoginEntity.getCreatedAt())
                 .build();
-
     }
 }

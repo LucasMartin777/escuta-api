@@ -9,33 +9,45 @@ import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.mapper.MusicMapper;
 import br.com.escuta.escuta.repository.AlbumRepository;
 import br.com.escuta.escuta.repository.GenreRepository;
-import lombok.AllArgsConstructor;
+import br.com.escuta.escuta.repository.MusicEntityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+
 public class MusicService {
 
-    private final AuthenticationUserService authenticationUserService;
-    private final GenreRepository genreRepository;
-    private final AlbumRepository albumRepository;
+    @Autowired
+    private AuthenticationUserService authenticationUserService;
+    @Autowired
+    private GenreRepository genreRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
+    @Autowired
+    private MusicEntityRepository musicEntityRepository;
 
 
     public MusicResponse musicCreation(MusicRequest request) {
 
         UserLoginEntity user = authenticationUserService.getAuthenticatedUser();
 
-        GenreEntity genre = genreRepository.findById(request.genreId());
+        GenreEntity genre = genreRepository.findById(request.genreId())
+                .orElseThrow(() -> new RuntimeException("Genre not found"));
+
 
         AlbumEntity album = null;
         if (request.albumId() != null) {
-            album = albumRepository.findById(request.albumId());
+            album = albumRepository.findById(request.albumId())
+                    .orElseThrow(() -> new RuntimeException("Album not found"));
         }
+
 
         MusicEntity musicEntity = MusicMapper.toEntity(request);
         musicEntity.setAlbum(album);
         musicEntity.setUserLogin(user);
         musicEntity.setGenre(genre);
+
+        musicEntityRepository.save(musicEntity);
 
 
         return MusicMapper.toDetaislResponse(musicEntity);

@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("perfil")
+@RequestMapping("/me/perfil")
 public class PerfilController {
 
 
-    @Autowired
-    UserPerfilService userPerfilService;
-
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/me")
-    public ResponseEntity<UserPerfilResponse> getMeuPerfil(@AuthenticationPrincipal UserLoginEntity user) {
-        return ResponseEntity.ok(UserPerfilMapper.toPerfilResponse(user));
-    }
+//    @Autowired
+//    UserPerfilService userPerfilService;
+//
+//
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping
+//    public ResponseEntity<UserPerfilResponse> getMeuPerfil(@AuthenticationPrincipal UserLoginEntity user) {
+//        return ResponseEntity.ok(UserPerfilMapper.toPerfilResponse(user));
+//    }
 
 
 }

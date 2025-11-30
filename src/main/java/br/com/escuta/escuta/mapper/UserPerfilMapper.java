@@ -6,6 +6,8 @@ import br.com.escuta.escuta.controller.response.UserPerfilResponse;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.entity.UserPerfilEntity;
 
+import java.util.List;
+
 public class UserPerfilMapper {
 
     public static UserPerfilEntity toEntity(UserPerfilRegisterRequest request) {
@@ -31,9 +33,15 @@ public class UserPerfilMapper {
                 .email(user.getEmail())
                 .description(user.getPerfil().getDescription())
                 .profilePhoto(user.getPerfil().getProfilePhoto())
-                .playlists(user.getPlaylists().stream().map(PlaylistMapper::toDetailsResponse).toList())
-                .musicas(user.getMusics().stream().map(MusicMapper::toDetaislResponse).toList())
-                .albuns(user.getAlbums().stream().map(AlbumMapper::toDetailsResponse).toList())
+                .playlists(user.getPlaylists() != null ?
+                        user.getPlaylists().stream().map(PlaylistMapper::toDetailsResponse).toList()
+                        : List.of())
+                .musicas(user.getMusics() != null ?
+                        user.getMusics().stream().map(MusicMapper::toDetaislResponse).toList()
+                        : List.of())
+                .albuns(user.getAlbums() != null ?
+                        user.getAlbums().stream().map(AlbumMapper::toDetailsResponse).toList()
+                        : List.of())
                 .build();
     }
 }

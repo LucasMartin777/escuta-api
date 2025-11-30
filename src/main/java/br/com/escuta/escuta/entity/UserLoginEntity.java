@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -43,15 +44,15 @@ public class UserLoginEntity implements UserDetails {
     @OneToOne(mappedBy = "userLogin", cascade = CascadeType.ALL)
     private UserPerfilEntity perfil;
 
-    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
-    private List<MusicEntity> musics;
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MusicEntity> musics = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
-    private List<AlbumEntity> albums;
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AlbumEntity> albums = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
-    private List<PlaylistEntity> playlists;
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PlaylistEntity> playlists = new ArrayList<>();
 
 
     @Override

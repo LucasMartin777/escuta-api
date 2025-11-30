@@ -2,15 +2,16 @@ package br.com.escuta.escuta.controller;
 
 import br.com.escuta.escuta.controller.request.MusicRequest;
 import br.com.escuta.escuta.controller.response.MusicResponse;
-import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.service.MusicService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/me/music-update")
+@SecurityRequirement(name = "bearer-key")
 public class UploadMusicController {
 
     @Autowired

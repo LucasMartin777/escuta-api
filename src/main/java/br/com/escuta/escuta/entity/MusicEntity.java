@@ -47,4 +47,13 @@ public class MusicEntity {
     @ManyToOne
     @JoinColumn(name = "album_id")
     private AlbumEntity album;
+
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(MusicEntity musicEntity) {
+        musicEntity.setIsActive(false);
+    }
 }
+

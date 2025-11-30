@@ -10,23 +10,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/me/music-update")
+@RequestMapping("/me/music")
 @SecurityRequirement(name = "bearer-key")
-public class UploadMusicController {
+public class MusicController {
 
     @Autowired
     private MusicService musicService;
 
-    @PostMapping
+    @PostMapping("upload")
     @ResponseStatus(HttpStatus.CREATED)
     public MusicResponse musicCreation(@RequestBody @Valid MusicRequest request) {
-        try {
-            return musicService.musicCreation(request);
+        return musicService.musicCreation(request);
+    }
 
-        } catch (IllegalArgumentException e) {
-            // Erros conhecidos: entidade não encontrada, dados inválidos, etc.
-            throw new RuntimeException("Erro ao criar música: " + e.getMessage());
-
-        }
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void musicResponse(@PathVariable Long id) {
+        musicService.musicLogicalDelete(id);
     }
 }

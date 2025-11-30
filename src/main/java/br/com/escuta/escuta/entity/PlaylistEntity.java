@@ -41,4 +41,12 @@ public class PlaylistEntity {
             inverseJoinColumns = @JoinColumn(name = "music_id")
     )
     private List<MusicEntity> musics;
+
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(PlaylistEntity playlistEntity) {
+        playlistEntity.setIsActive(false);
+    }
 }

@@ -5,6 +5,7 @@ CREATE TABLE PLAYLIST (
     is_public BOOLEAN DEFAULT TRUE,
     registration_date DATE,
     login_id BIGINT NOT NULL,
+    is_active tinyint(1) not null default 1
     CONSTRAINT fk_playlist_login
         FOREIGN KEY (login_id) REFERENCES user_login(id)
         ON DELETE CASCADE

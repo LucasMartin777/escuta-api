@@ -27,5 +27,13 @@ public class UserPerfilEntity {
     @JoinColumn(name = "user_login_id")
     private UserLoginEntity userLogin;
 
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(UserPerfilEntity userPerfilEntity) {
+        userPerfilEntity.setIsActive(false);
+    }
+
 
 }

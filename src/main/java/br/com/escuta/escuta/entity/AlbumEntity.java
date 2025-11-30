@@ -30,4 +30,12 @@ public class AlbumEntity {
     @JoinColumn(name = "login_id")
     private UserLoginEntity userLogin;
 
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(AlbumEntity albumEntity) {
+        albumEntity.setIsActive(false);
+    }
+
 }

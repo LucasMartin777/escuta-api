@@ -52,4 +52,9 @@ public class MusicService {
 
         return MusicMapper.toDetaislResponse(musicEntity);
     }
+
+    public void musicLogicalDelete(Long id) {
+        MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
+        musicEntity.logicalExclusion(musicEntity);
+    }
 }

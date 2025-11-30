@@ -6,4 +6,5 @@ CREATE TABLE USER_LOGIN(
     cpf VARCHAR(20) NOT NULL,
     date_of_birth DATE NOT NULL,
     created_at DATE
+    is_active tinyint(1) not null default 1
 );

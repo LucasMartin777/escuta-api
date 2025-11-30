@@ -54,6 +54,14 @@ public class UserLoginEntity implements UserDetails {
     @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PlaylistEntity> playlists = new ArrayList<>();
 
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(UserLoginEntity userLoginEntity) {
+        userLoginEntity.setIsActive(false);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

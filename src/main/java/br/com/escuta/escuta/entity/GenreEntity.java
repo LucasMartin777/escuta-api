@@ -24,4 +24,12 @@ public class GenreEntity {
     @OneToMany(mappedBy = "genre")
     private List<MusicEntity> musics;
 
+    @Builder.Default
+    private Boolean isActive = true;
+
+
+    public void logicalExclusion(GenreEntity genreEntity) {
+        genreEntity.setIsActive(false);
+    }
+
 }

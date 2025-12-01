@@ -5,7 +5,7 @@ CREATE TABLE ALBUM (
     album_cover VARCHAR(500),
     description VARCHAR(500),
     login_id BIGINT NOT NULL,
-    is_active tinyint(1) not null default 1
+    is_active tinyint(1) not null default 1,
     CONSTRAINT fk_album_login
         FOREIGN KEY (login_id) REFERENCES user_login(id)
         ON DELETE CASCADE

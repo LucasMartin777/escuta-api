@@ -24,6 +24,7 @@ public class UserLoginMapper {
                 .cpf(userLoginEntity.getCpf())
                 .dateOfBirth(userLoginEntity.getDateOfBirth())
                 .createdAt(userLoginEntity.getCreatedAt())
+                .perfil(UserPerfilMapper.toDetaislResponse(userLoginEntity.getPerfil()))
                 .build();
     }
 }

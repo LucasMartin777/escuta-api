@@ -24,7 +24,7 @@ public class UserPerfilEntity {
     private String description;
 
     @OneToOne
-    @JoinColumn(name = "user_login_id")
+    @JoinColumn(name = "user_login_id", nullable = false)
     private UserLoginEntity userLogin;
 
     @Builder.Default

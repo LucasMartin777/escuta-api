@@ -24,8 +24,15 @@ public class MusicController {
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void musicResponse(@PathVariable Long id) {
         musicService.musicLogicalDelete(id);
     }
+
+//    @GetMapping("{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public MusicResponse musicRequest(PathVariable Long id){
+//        return
+//
+//    }
 }

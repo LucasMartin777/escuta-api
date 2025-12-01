@@ -18,14 +18,14 @@ public class AuthenticationUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userLoginRepository.findByEmail(username);
+        return userLoginRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     public UserLoginEntity getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userLoginRepository.findEntityByEmail(email);
+        return userLoginRepository.findEntityByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
-
-
 }
 

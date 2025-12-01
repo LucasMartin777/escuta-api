@@ -7,7 +7,7 @@ CREATE TABLE MUSIC (
     login_id BIGINT NOT NULL,
     genre_id BIGINT,
     album_id BIGINT,
-    is_active tinyint(1) not null default 1
+    is_active tinyint(1) not null default 1,
 
 
     CONSTRAINT fk_music_login

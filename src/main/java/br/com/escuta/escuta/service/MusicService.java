@@ -57,4 +57,10 @@ public class MusicService {
         MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
         musicEntity.logicalExclusion(musicEntity);
     }
+
+    public MusicResponse musics(Long id) {
+
+        MusicEntity music = musicEntityRepository.findById(id).orElseThrow();
+        return MusicMapper.toDetaislResponse(music);
+    }
 }

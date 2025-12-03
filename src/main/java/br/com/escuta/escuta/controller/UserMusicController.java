@@ -15,9 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/me/musics")
+@RequestMapping("/users/me/musics")
 @SecurityRequirement(name = "bearer-key")
-public class MusicController {
+public class UserMusicController {
 
     @Autowired
     private MusicService musicService;

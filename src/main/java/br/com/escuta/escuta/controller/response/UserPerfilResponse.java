@@ -12,7 +12,7 @@ public record UserPerfilResponse(
         String profilePhoto,
         String description,
         List<PlaylistResponse> playlists,
-        List<MusicResponse> musicas,
+        List<MusicDetailsResponse> musicas,
         List<AlbumResponse> albuns
 ) {
 }

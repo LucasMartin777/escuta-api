@@ -37,7 +37,7 @@ public class UserPerfilMapper {
                         user.getPlaylists().stream().map(PlaylistMapper::toDetailsResponse).toList()
                         : List.of())
                 .musicas(user.getMusics() != null ?
-                        user.getMusics().stream().map(MusicMapper::toDetaislResponse).toList()
+                        user.getMusics().stream().map(MusicMapper::toDetailsResponse).toList()
                         : List.of())
                 .albuns(user.getAlbums() != null ?
                         user.getAlbums().stream().map(AlbumMapper::toDetailsResponse).toList()

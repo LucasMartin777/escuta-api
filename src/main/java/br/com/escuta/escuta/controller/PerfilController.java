@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/me/perfil")
+@RequestMapping("/me/perfis")
 @SecurityRequirement(name = "bearer-key")
 public class PerfilController {
 
-
     @Autowired
     UserPerfilService userPerfilService;
-
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping

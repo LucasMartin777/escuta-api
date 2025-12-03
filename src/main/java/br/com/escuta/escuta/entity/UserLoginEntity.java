@@ -47,7 +47,6 @@ public class UserLoginEntity implements UserDetails {
     @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MusicEntity> musics = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AlbumEntity> albums = new ArrayList<>();
 

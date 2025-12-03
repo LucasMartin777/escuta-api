@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record MusicResponse(
+public record MusicDetailsResponse(
         Long id,
         String name,
         String audioUrl,

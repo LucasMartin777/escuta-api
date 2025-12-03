@@ -2,6 +2,7 @@ package br.com.escuta.escuta.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@SQLRestriction("is_active = 1")
 public class MusicEntity {
 
     @Id
@@ -43,17 +45,17 @@ public class MusicEntity {
     @JoinColumn(name = "genre_id")
     private GenreEntity genre;
 
-
     @ManyToOne
     @JoinColumn(name = "album_id")
     private AlbumEntity album;
 
+    @Column(name = "is_active")
     @Builder.Default
     private Boolean isActive = true;
 
 
-    public void logicalExclusion(MusicEntity musicEntity) {
-        musicEntity.setIsActive(false);
+    public void logicalExclusion() {
+        this.isActive = false;
     }
 }
 

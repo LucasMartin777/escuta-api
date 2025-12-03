@@ -19,10 +19,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity tratarErro404() {
-        return ResponseEntity.notFound().build();
+    public ErrorResponse tratarErro404(EntityNotFoundException e, HttpServletRequest request) {
+        return buildErrorResponse(request, e.getMessage(), HttpStatus.NOT_FOUND);
     }
-
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
@@ -35,10 +34,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleBadCredentialsException(
             BadCredentialsException e, HttpServletRequest request) {
-
         return buildErrorResponse(request, e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
-
 
     private record DadosErroValidacao(String campo, String mensagem) {
         public DadosErroValidacao(FieldError erro) {

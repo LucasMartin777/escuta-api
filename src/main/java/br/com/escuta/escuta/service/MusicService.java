@@ -14,6 +14,7 @@ import br.com.escuta.escuta.repository.GenreRepository;
 import br.com.escuta.escuta.repository.MusicEntityRepository;
 import br.com.escuta.escuta.repository.UserLoginRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,21 +24,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-
+@AllArgsConstructor
 public class MusicService {
 
-    @Autowired
-    private AuthenticationUserService authenticationUserService;
-    @Autowired
-    private GenreRepository genreRepository;
-    @Autowired
-    private AlbumRepository albumRepository;
-    @Autowired
-    private MusicEntityRepository musicEntityRepository;
-    @Autowired
-    private UserLoginRepository userLoginRepository;
-    @Autowired
-    private OwnershipService ownershipService;
+    private final AuthenticationUserService authenticationUserService;
+    private final GenreRepository genreRepository;
+    private final AlbumRepository albumRepository;
+    private final MusicEntityRepository musicEntityRepository;
+    private final UserLoginRepository userLoginRepository;
+    private final OwnershipService ownershipService;
 
     @Transactional
     public MusicDetailsResponse create(MusicRequest request) {
@@ -81,18 +76,6 @@ public class MusicService {
         );
         musicEntity.logicalExclusion();
     }
-
-
-//    @Transactional
-//    public void musicLogicalDelete3(Long id) {
-//
-//        Long userAuthenticatedId = authenticationUserService.getAuthenticatedUserId();
-//
-//        var music = musicEntityRepository.findByIdAndUserLogin_Id(id, userAuthenticatedId)
-//                .orElseThrow(() -> new IllegalArgumentException("Musica nao encontrada para o usuario logado"));
-//
-//        music.logicalExclusion();
-//    }
 
     public MusicDetailsResponse musics(Long id) {
 

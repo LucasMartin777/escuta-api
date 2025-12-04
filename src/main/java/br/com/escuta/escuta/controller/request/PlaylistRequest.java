@@ -10,12 +10,12 @@ public record PlaylistRequest(
         @NotBlank
         String name,
 
-        String cover,
-
         @NotNull
         Boolean isPublic,
 
+        String cover,
+
         LocalDate registrationDate
-) {
-}
+
+){}
 

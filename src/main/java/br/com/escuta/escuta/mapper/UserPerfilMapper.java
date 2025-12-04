@@ -3,6 +3,7 @@ package br.com.escuta.escuta.mapper;
 import br.com.escuta.escuta.controller.request.UserPerfilRegisterRequest;
 import br.com.escuta.escuta.controller.response.UserPerfilRegisterResponse;
 import br.com.escuta.escuta.controller.response.UserPerfilResponse;
+import br.com.escuta.escuta.controller.response.UserPerfilSettingsResponse;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.entity.UserPerfilEntity;
 
@@ -29,7 +30,7 @@ public class UserPerfilMapper {
     public static UserPerfilResponse toPerfilResponse(UserLoginEntity user) {
         return UserPerfilResponse.builder()
                 .id(user.getId())
-                .userName(user.getUsername())
+                .userName(user.getName())
                 .email(user.getEmail())
                 .description(user.getPerfil().getDescription())
                 .profilePhoto(user.getPerfil().getProfilePhoto())
@@ -42,6 +43,14 @@ public class UserPerfilMapper {
                 .albuns(user.getAlbums() != null ?
                         user.getAlbums().stream().map(AlbumMapper::toDetailsResponse).toList()
                         : List.of())
+                .build();
+    }
+    public static UserPerfilSettingsResponse toPerfilSettingsResponse(UserLoginEntity user) {
+        return UserPerfilSettingsResponse.builder()
+
+                .userName(user.getName())
+                .description(user.getPerfil().getDescription())
+                .profilePhoto(user.getPerfil().getProfilePhoto())
                 .build();
     }
 }

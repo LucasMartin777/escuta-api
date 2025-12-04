@@ -6,6 +6,7 @@ import java.util.List;
 
 @Builder
 public record UserPerfilResponse(
+
         Long id,
         String userName,
         String email,
@@ -13,6 +14,5 @@ public record UserPerfilResponse(
         String description,
         List<PlaylistResponse> playlists,
         List<MusicDetailsResponse> musicas,
-        List<AlbumResponse> albuns
-) {
-}
+        List<AlbumDetailsResponse> albuns
+){}

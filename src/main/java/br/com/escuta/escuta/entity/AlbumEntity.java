@@ -3,6 +3,8 @@ package br.com.escuta.escuta.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Table(name = "ALBUM")
 @Entity
 @Getter
@@ -20,6 +22,8 @@ public class AlbumEntity {
 
     @Column(name = "album_duration")
     private int albumDuration;
+
+    private LocalDate releaseDate;
 
     @Column(name = "album_cover")
     private String albumCover;

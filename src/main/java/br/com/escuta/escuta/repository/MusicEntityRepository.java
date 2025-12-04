@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface MusicEntityRepository extends JpaRepository<MusicEntity, Long> {
     Page<MusicEntity> findAllByIsActiveTrue(Pageable pageable);
-
-    Optional<MusicEntity> findByIdAndUserLogin_Id(Long id, Long id1);
 }

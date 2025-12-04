@@ -27,6 +27,4 @@ public record UserLoginRegisterRequest(
         @NotNull
         LocalDateTime createdAt
 
-
-) {
-}
+){}

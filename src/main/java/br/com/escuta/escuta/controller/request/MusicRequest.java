@@ -13,13 +13,13 @@ public record MusicRequest(
         @NotBlank
         String audioUrl,
 
+        @NotNull
+        Long genreId,
+
         LocalDate releaseDate,
 
         String singleCover,
 
-        @NotNull
-        Long genreId,
-
         Long albumId
-) {
-}
+
+){}

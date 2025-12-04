@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 @Builder
 public record MusicSumaryResponse(
+
         Long id,
         String name,
         LocalDate releaseDate,
         String singleCover
-) {
-}
+){}
 

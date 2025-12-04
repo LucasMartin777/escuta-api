@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
 public class AuthenticationUserService implements UserDetailsService {
 
     private final UserLoginRepository userLoginRepository;
-    private final ObjectMapper objectMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userLoginRepository.findByEmail(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userLoginRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

@@ -1,8 +1,8 @@
 package br.com.escuta.escuta.controller;
 
-import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
-import br.com.escuta.escuta.controller.response.MusicSumaryResponse;
-import br.com.escuta.escuta.service.MusicService;
+import br.com.escuta.escuta.controller.response.AlbumDetailsResponse;
+import br.com.escuta.escuta.controller.response.AlbumSumaryResponse;
+import br.com.escuta.escuta.service.AlbumService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -14,21 +14,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/musics")
+@RequestMapping("/albums")
 @SecurityRequirement(name = "bearer-key")
-public class MusicController {
+public class AlbumController {
 
-    private final MusicService musicService;
+    private final AlbumService albumService;
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MusicDetailsResponse getMusicById(@PathVariable Long id) {
-        return musicService.musics(id);
+    public AlbumDetailsResponse getAlbumById(@PathVariable Long id) {
+        return albumService.album(id);
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Page<MusicSumaryResponse> listUserMusics(@ParameterObject @PageableDefault(size = 20, sort = "releaseDate") Pageable pageable) {
-        return musicService.listMusics(pageable);
+    public Page<AlbumSumaryResponse> listUserAlbums(@ParameterObject @PageableDefault(size = 20, sort = "releaseDate") Pageable pageable) {
+        return albumService.listAlbums(pageable);
     }
 }

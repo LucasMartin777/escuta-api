@@ -7,7 +7,7 @@ import br.com.escuta.escuta.entity.UserLoginEntity;
 public class UserLoginMapper {
     public static UserLoginEntity toEntity(UserLoginRegisterRequest request) {
         return UserLoginEntity.builder()
-                .userName(request.userName())
+                .name(request.userName())
                 .email(request.email())
                 .password(request.password())
                 .cpf(request.cpf())
@@ -19,7 +19,7 @@ public class UserLoginMapper {
     public static UserLoginDetaisResponse toDetaislResponse(UserLoginEntity userLoginEntity) {
         return UserLoginDetaisResponse.builder()
                 .id(userLoginEntity.getId())
-                .userName(userLoginEntity.getUsername())
+                .userName(userLoginEntity.getName())
                 .email(userLoginEntity.getEmail())
                 .cpf(userLoginEntity.getCpf())
                 .dateOfBirth(userLoginEntity.getDateOfBirth())

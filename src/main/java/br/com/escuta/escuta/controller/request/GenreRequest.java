@@ -8,5 +8,5 @@ public record GenreRequest(
 
         @NotBlank
         String name
-) {
-}
+
+){}

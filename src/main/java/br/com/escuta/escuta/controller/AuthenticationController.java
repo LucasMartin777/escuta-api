@@ -9,7 +9,7 @@ import br.com.escuta.escuta.security.DadosTokenJWT;
 import br.com.escuta.escuta.security.TokenService;
 import br.com.escuta.escuta.service.UserLoginRegisterService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,35 +17,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/auth")
 
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager manager;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private UserLoginRegisterService userLoginRegisterService;
+    private final AuthenticationManager manager;
+    private final TokenService tokenService;
+    private final UserLoginRegisterService userLoginRegisterService;
 
     @PostMapping("/login")
     public ResponseEntity<?> efetuarLogin(@RequestBody @Valid UserLoginAuthRequest request) {
 
-        try {
+        var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+        var authentication = manager.authenticate(token);
 
-            var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-            var authentication = manager.authenticate(token);
+        var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
 
-            var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
-
-            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return null;
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 
     @PostMapping("/register")
@@ -53,7 +42,6 @@ public class AuthenticationController {
 
     public UserLoginDetaisResponse efetuarLogin(
             @RequestBody @Valid UserLoginRegisterRequest request) {
-            return userLoginRegisterService.register(request);
+        return userLoginRegisterService.register(request);
     }
-
 }

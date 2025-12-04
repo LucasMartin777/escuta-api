@@ -5,11 +5,10 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record PlaylistResponse(
+public record AlbumSumaryResponse(
 
         Long id,
         String name,
-        String cover,
-        boolean isPublic,
-        LocalDate registrationDate
-) {}
+        String albumCover,
+        LocalDate releaseDate
+){}

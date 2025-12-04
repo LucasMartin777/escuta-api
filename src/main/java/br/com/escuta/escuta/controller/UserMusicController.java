@@ -6,19 +6,19 @@ import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
 import br.com.escuta.escuta.service.MusicService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/users/me/musics")
 @SecurityRequirement(name = "bearer-key")
 public class UserMusicController {
 
-    @Autowired
-    private MusicService musicService;
+    private final MusicService musicService;
 
-    @PostMapping("/upload")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MusicDetailsResponse create(@RequestBody @Valid MusicRequest request) {
         return musicService.create(request);

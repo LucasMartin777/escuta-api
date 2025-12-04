@@ -4,6 +4,7 @@ CREATE TABLE ALBUM (
     album_duration INT,
     album_cover VARCHAR(500),
     description VARCHAR(500),
+    release_date DATE,
     login_id BIGINT NOT NULL,
     is_active tinyint(1) not null default 1,
     CONSTRAINT fk_album_login

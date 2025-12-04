@@ -25,9 +25,10 @@ public class UserLoginEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name")
-    private String userName;
 
+    private String name;
+
+    @Column(name = "email")
     private String email;
 
     private String password;
@@ -98,7 +99,7 @@ public class UserLoginEntity implements UserDetails {
 
         Optional.ofNullable(request.userName())
                 .filter(n -> !n.isBlank())
-                .ifPresent(this::setUserName);
+                .ifPresent(this::setName);
 
         Optional.ofNullable(request.description())
                 .filter(d -> !d.isBlank())

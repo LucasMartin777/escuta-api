@@ -1,5 +1,7 @@
 package br.com.escuta.escuta.entity;
 
+import br.com.escuta.escuta.controller.request.MusicUpdateRequest;
+import br.com.escuta.escuta.controller.request.PerfilUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,10 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Table(name = "USER_LOGIN")//no banco
 @Entity
@@ -93,5 +92,24 @@ public class UserLoginEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void update(PerfilUpdateRequest request) {
+
+        Optional.ofNullable(request.userName())
+                .filter(n -> !n.isBlank())
+                .ifPresent(this::setUserName);
+
+        Optional.ofNullable(request.description())
+                .filter(d -> !d.isBlank())
+                .ifPresent(d -> getPerfil().setDescription(d));
+
+        Optional.ofNullable(request.profilePhoto())
+                .filter(d -> !d.isBlank())
+                .ifPresent(d -> getPerfil().setProfilePhoto(d));
+    }
+
+    public void logicalExclusion() {
+        this.isActive = false;
     }
 }

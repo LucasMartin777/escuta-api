@@ -75,7 +75,7 @@ public class MusicService {
 
         MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
 
-        ownershipService.validateOwnership(
+        ownershipService.validateOwnershipMusic(
                 musicEntity.getUserLogin().getId(),
                 userAuthenticated
         );
@@ -114,7 +114,7 @@ public class MusicService {
         MusicEntity music = musicEntityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Música não encontrada"));
 
-        ownershipService.validateOwnership(
+        ownershipService.validateOwnershipMusic(
                 music.getUserLogin().getId(),
                 userAuthenticated
         );

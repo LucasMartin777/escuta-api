@@ -1,7 +1,7 @@
 package br.com.escuta.escuta.mapper;
 
 import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
-import br.com.escuta.escuta.controller.response.UserLoginRegisterResponse;
+import br.com.escuta.escuta.controller.response.UserLoginDetaisResponse;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 
 public class UserLoginMapper {
@@ -16,8 +16,8 @@ public class UserLoginMapper {
                 .build();
     }
 
-    public static UserLoginRegisterResponse toDetaislResponse(UserLoginEntity userLoginEntity) {
-        return UserLoginRegisterResponse.builder()
+    public static UserLoginDetaisResponse toDetaislResponse(UserLoginEntity userLoginEntity) {
+        return UserLoginDetaisResponse.builder()
                 .id(userLoginEntity.getId())
                 .userName(userLoginEntity.getUsername())
                 .email(userLoginEntity.getEmail())

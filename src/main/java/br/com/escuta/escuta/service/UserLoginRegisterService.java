@@ -1,7 +1,7 @@
 package br.com.escuta.escuta.service;
 
 import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
-import br.com.escuta.escuta.controller.response.UserLoginRegisterResponse;
+import br.com.escuta.escuta.controller.response.UserLoginDetaisResponse;
 import br.com.escuta.escuta.entity.UserPerfilEntity;
 import br.com.escuta.escuta.mapper.UserLoginMapper;
 import br.com.escuta.escuta.repository.UserLoginRepository;
@@ -17,13 +17,15 @@ public class UserLoginRegisterService {
 
     private final UserLoginRepository userLoginRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CreatePasswordService createPasswordService;
 
     @Transactional
-    public UserLoginRegisterResponse register(UserLoginRegisterRequest request) {
+    public UserLoginDetaisResponse register(UserLoginRegisterRequest request) {
 
         var userLogin = UserLoginMapper.toEntity(request);
 
-        String senhaCriptografada = passwordEncoder.encode(request.password());
+        String senhaCriptografada = createPasswordService.passwordEncoder(request.password());
+
         userLogin.setPassword(senhaCriptografada);
 
         var perfil = UserPerfilEntity.builder()

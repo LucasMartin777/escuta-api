@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.Date;
 @Builder
-public record UserLoginRegisterResponse(
+public record UserLoginDetaisResponse(
         Long id,
         String userName,
         String email,

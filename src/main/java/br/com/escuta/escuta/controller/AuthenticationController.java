@@ -3,7 +3,7 @@ package br.com.escuta.escuta.controller;
 
 import br.com.escuta.escuta.controller.request.UserLoginAuthRequest;
 import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
-import br.com.escuta.escuta.controller.response.UserLoginRegisterResponse;
+import br.com.escuta.escuta.controller.response.UserLoginDetaisResponse;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.security.DadosTokenJWT;
 import br.com.escuta.escuta.security.TokenService;
@@ -51,17 +51,9 @@ public class AuthenticationController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
 
-    public UserLoginRegisterResponse efetuarLogin(
+    public UserLoginDetaisResponse efetuarLogin(
             @RequestBody @Valid UserLoginRegisterRequest request) {
-        try {
             return userLoginRegisterService.register(request);
-
-        } catch (Exception e) {
-            System.out.println(e);
-
-        }
-
-        return null;
     }
 
 }

@@ -30,10 +30,7 @@ public class UserPerfilEntity {
     @Builder.Default
     private Boolean isActive = true;
 
-
     public void logicalExclusion(UserPerfilEntity userPerfilEntity) {
         userPerfilEntity.setIsActive(false);
     }
-
-
 }

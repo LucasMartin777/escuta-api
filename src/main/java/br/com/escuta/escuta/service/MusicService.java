@@ -1,6 +1,7 @@
 package br.com.escuta.escuta.service;
 
 import br.com.escuta.escuta.controller.request.MusicRequest;
+import br.com.escuta.escuta.controller.request.MusicUpdateRequest;
 import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
 import br.com.escuta.escuta.controller.response.MusicSumaryResponse;
 import br.com.escuta.escuta.entity.AlbumEntity;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 
 public class MusicService {
@@ -33,9 +36,11 @@ public class MusicService {
     private MusicEntityRepository musicEntityRepository;
     @Autowired
     private UserLoginRepository userLoginRepository;
+    @Autowired
+    private OwnershipService ownershipService;
 
     @Transactional
-    public MusicDetailsResponse musicCreation(MusicRequest request) {
+    public MusicDetailsResponse create(MusicRequest request) {
 
         Long userId = authenticationUserService.getAuthenticatedUserId();
         UserLoginEntity user = userLoginRepository.getReferenceById(userId);
@@ -64,17 +69,16 @@ public class MusicService {
     }
 
     @Transactional
-    public void musicLogicalDelete(Long id) {
+    public void logicalDelete(Long id) {
 
         Long userAuthenticated = authenticationUserService.getAuthenticatedUserId();
 
         MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
 
-        boolean comparemusic = musicEntity.getUserLogin().getId().equals(userAuthenticated);
-
-        if (!comparemusic) {
-            throw new SecurityException("Essa musica nao pertence ao seu usuario e nao pode ser deletada");
-        }
+        ownershipService.validateOwnership(
+                musicEntity.getUserLogin().getId(),
+                userAuthenticated
+        );
         musicEntity.logicalExclusion();
     }
 
@@ -92,7 +96,7 @@ public class MusicService {
 
     public MusicDetailsResponse musics(Long id) {
 
-        MusicEntity music = musicEntityRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Musica nao encontrada"));
+        MusicEntity music = musicEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Musica nao encontrada"));
         return MusicMapper.toDetailsResponse(music);
     }
 
@@ -100,5 +104,31 @@ public class MusicService {
 
         return musicEntityRepository.findAllByIsActiveTrue(pageable)
                 .map(MusicMapper::toSumaryResponse);
+    }
+
+    @Transactional
+    public MusicDetailsResponse update(Long id, MusicUpdateRequest request) {
+
+        Long userAuthenticated = authenticationUserService.getAuthenticatedUserId();
+
+        MusicEntity music = musicEntityRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Música não encontrada"));
+
+        ownershipService.validateOwnership(
+                music.getUserLogin().getId(),
+                userAuthenticated
+        );
+
+        music.update(request);
+
+        Optional.ofNullable(request.genreId())
+                .ifPresent(genreId -> {
+                    GenreEntity genre = genreRepository.findById(genreId)
+                            .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
+                    music.setGenre(genre);
+                });
+
+        musicEntityRepository.save(music);
+        return MusicMapper.toDetailsResponse(music);
     }
 }

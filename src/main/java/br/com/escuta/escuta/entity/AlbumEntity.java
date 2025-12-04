@@ -33,9 +33,7 @@ public class AlbumEntity {
     @Builder.Default
     private Boolean isActive = true;
 
-
     public void logicalExclusion(AlbumEntity albumEntity) {
         albumEntity.setIsActive(false);
     }
-
 }

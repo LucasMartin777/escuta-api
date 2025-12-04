@@ -17,7 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users-auth")
+@RequestMapping("/auth")
 
 public class AuthenticationController {
 
@@ -31,21 +31,37 @@ public class AuthenticationController {
     private UserLoginRegisterService userLoginRegisterService;
 
     @PostMapping("/login")
-    public ResponseEntity efetuarLogin(@RequestBody @Valid UserLoginAuthRequest request) {
+    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid UserLoginAuthRequest request) {
 
-        var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-        var authentication = manager.authenticate(token);
+        try {
 
-        var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
+            var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+            var authentication = manager.authenticate(token);
 
-        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+            var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
+
+            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return null;
     }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
+
     public UserLoginRegisterResponse efetuarLogin(
             @RequestBody @Valid UserLoginRegisterRequest request) {
-        return userLoginRegisterService.register(request);
+        try {
+            return userLoginRegisterService.register(request);
+
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
+
+        return null;
     }
 
 }

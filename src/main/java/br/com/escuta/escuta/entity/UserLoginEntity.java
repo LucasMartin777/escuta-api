@@ -56,11 +56,9 @@ public class UserLoginEntity implements UserDetails {
     @Builder.Default
     private Boolean isActive = true;
 
-
     public void logicalExclusion(UserLoginEntity userLoginEntity) {
         userLoginEntity.setIsActive(false);
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

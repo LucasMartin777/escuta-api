@@ -27,9 +27,7 @@ public class GenreEntity {
     @Builder.Default
     private Boolean isActive = true;
 
-
     public void logicalExclusion(GenreEntity genreEntity) {
         genreEntity.setIsActive(false);
     }
-
 }

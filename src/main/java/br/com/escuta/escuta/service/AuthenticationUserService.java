@@ -29,9 +29,9 @@ public class AuthenticationUserService implements UserDetailsService {
         if (principal instanceof UserLoginEntity user) {
             return user.getId();
         }
-
         return null;
     }
+
 
 }
 

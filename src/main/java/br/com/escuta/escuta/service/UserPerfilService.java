@@ -1,5 +1,6 @@
 package br.com.escuta.escuta.service;
 
+import br.com.escuta.escuta.controller.request.PerfilUpdateRequest;
 import br.com.escuta.escuta.controller.response.UserPerfilResponse;
 import br.com.escuta.escuta.mapper.UserPerfilMapper;
 import br.com.escuta.escuta.repository.UserLoginRepository;
@@ -20,5 +21,9 @@ public class UserPerfilService {
         var user = repository.findById(id).orElseThrow();
         return UserPerfilMapper.toPerfilResponse(user);
     }
+
+//    public UserPerfilResponse perfilUpdate(Long id, PerfilUpdateRequest request) {
+//        authenticationUserService.getAuthenticatedUserId()
+//    }
 }
 

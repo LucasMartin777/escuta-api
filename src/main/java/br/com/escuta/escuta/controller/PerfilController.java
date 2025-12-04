@@ -20,9 +20,11 @@ public class PerfilController {
     @Autowired
     UserPerfilService userPerfilService;
 
-    @ResponseStatus(HttpStatus.OK)
+
     @GetMapping
-    public UserPerfilResponse getMeuPerfil(@AuthenticationPrincipal UserLoginEntity user) {
+    @ResponseStatus(HttpStatus.OK)
+    public UserPerfilResponse myProfile(@AuthenticationPrincipal UserLoginEntity user) {
         return userPerfilService.perfilResponse(user.getId());
     }
+
 }

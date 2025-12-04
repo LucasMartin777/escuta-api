@@ -1,11 +1,13 @@
 package br.com.escuta.escuta.entity;
 
+import br.com.escuta.escuta.controller.request.MusicUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Table(name = "MUSIC")
 @Entity
@@ -35,11 +37,9 @@ public class MusicEntity {
     @ManyToMany(mappedBy = "musics")
     private List<PlaylistEntity> playlists;
 
-
     @ManyToOne
     @JoinColumn(name = "login_id")
     private UserLoginEntity userLogin;
-
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
@@ -53,6 +53,14 @@ public class MusicEntity {
     @Builder.Default
     private Boolean isActive = true;
 
+    public void update(MusicUpdateRequest request){
+
+        Optional.ofNullable(request.name()).filter(n->!n.isBlank()).ifPresent(this::setName);
+        Optional.ofNullable(request.singleCover())
+                .filter(n->!n.isBlank())
+                .ifPresent(this::setSingleCover);
+        Optional.ofNullable(request.genreId()).ifPresent(this::setId);
+    }
 
     public void logicalExclusion() {
         this.isActive = false;

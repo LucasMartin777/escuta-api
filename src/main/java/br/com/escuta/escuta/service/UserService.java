@@ -18,14 +18,14 @@ public class UserService {
     private final LoginRepository repository;
     private final CreatePasswordService createPasswordService;
 
-    public UserResponse perfilResponse(LoginEntity login) {
+    public UserResponse userResponse(LoginEntity login) {
         LoginEntity user1 = repository.getReferenceById(login.getId());
-        return UserMapper.toPerfilResponse(user1);
+        return UserMapper.toUserResponse(user1);
     }
 
     public UserSettingsResponse userSettingsResponse(LoginEntity login) {
         LoginEntity user1 = repository.getReferenceById(login.getId());
-        return UserMapper.toPerfilSettingsResponse(user1);
+        return UserMapper.toUserSettingsResponse(user1);
     }
 
     public UserResponse userUpdate(LoginEntity login, UserUpdateRequest request) {
@@ -41,7 +41,7 @@ public class UserService {
 
         repository.save(login);
 
-        return UserMapper.toPerfilResponse(login);
+        return UserMapper.toUserResponse(login);
     }
 }
 

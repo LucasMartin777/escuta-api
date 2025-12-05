@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/users/me")
 @SecurityRequirement(name = "bearer-key")
-public class UserPerfilController {
+public class UserController {
 
     private final UserService userService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public UserResponse myProfile(@AuthenticationPrincipal LoginEntity user) {
-        return userService.perfilResponse(user);
+        return userService.userResponse(user);
     }
 
     @GetMapping("/settings")
@@ -36,7 +36,7 @@ public class UserPerfilController {
     @ResponseStatus(HttpStatus.OK)
     public UserResponse update(@AuthenticationPrincipal LoginEntity user,
                                @RequestBody @Valid UserUpdateRequest userUpdateRequest) {
-        return userService.perfilUpdate(user, userUpdateRequest);
+        return userService.userUpdate(user, userUpdateRequest);
 
     }
 }

@@ -18,7 +18,6 @@ public class UserMapper {
                 .name(request.name())
                 .dateOfBirth(request.dateOfBirth())
                 .createdAt(request.createdAt())
-                .perfil(UserMapper.toDetaislResponse(userLoginEntity.getPerfil()))
                 .build();
     }
 
@@ -31,12 +30,12 @@ public class UserMapper {
 
     }
 
-    public static UserResponse toPerfilResponse(LoginEntity user) {
+    public static UserResponse toUserResponse(LoginEntity user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .userName(user.getName())
                 .email(user.getEmail())
-                .description(user.getPerfil().getDescription())
+                .description(user.getUser().getDescription())
                 .profilePhoto(user.getPerfil().getProfilePhoto())
                 .playlists(user.getPlaylists() != null ?
                         user.getPlaylists().stream().map(PlaylistMapper::toDetailsResponse).toList()
@@ -49,7 +48,7 @@ public class UserMapper {
                         : List.of())
                 .build();
     }
-    public static UserSettingsResponse toPerfilSettingsResponse(UserLoginEntity user) {
+    public static UserSettingsResponse toUserSettingsResponse(UserLoginEntity user) {
         return UserSettingsResponse.builder()
 
                 .userName(user.getName())

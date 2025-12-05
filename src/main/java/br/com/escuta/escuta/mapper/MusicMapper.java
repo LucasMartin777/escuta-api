@@ -30,7 +30,7 @@ public class MusicMapper {
                 .audioUrl(musicEntity.getAudioUrl())
                 .releaseDate(musicEntity.getReleaseDate())
                 .singleCover(musicEntity.getSingleCover())
-                .genre(GenreMapper.toDetailsResponse(musicEntity.getGenre()))
+                .genre(GenreMapper.toDetailsResponse(musicEntity.getGenres()))
                 .album(musicEntity.getAlbum() != null
                         ? AlbumMapper.toDetailsResponse(musicEntity.getAlbum())
                         : null)

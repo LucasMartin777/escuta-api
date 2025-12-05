@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Table(name = "MUSIC")
+@Table(name = "musics")
 @Entity
 @Getter
 @Setter
@@ -40,11 +40,11 @@ public class MusicEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity users;
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
-    private GenreEntity genre;
+    private GenreEntity genres;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
@@ -68,7 +68,7 @@ public class MusicEntity {
                 .ifPresent(genreId -> {
                     GenreEntity g = new GenreEntity();
                     g.setId(genreId);
-                    this.setGenre(g);
+                    this.setGenres(g);
                 });
     }
 

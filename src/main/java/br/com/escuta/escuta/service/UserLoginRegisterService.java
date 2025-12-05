@@ -33,7 +33,7 @@ public class UserLoginRegisterService {
                 .build();
 
         login.setUser(user);
-        user.setLogin(login);
+        user.setLogins(login);
 
         loginRepository.save(login);
 

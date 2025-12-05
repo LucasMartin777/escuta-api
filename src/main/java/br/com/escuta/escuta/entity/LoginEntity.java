@@ -7,12 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "LOGIN")
+@Table(name = "logins")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,7 +40,7 @@ public class LoginEntity implements UserDetails {
     private Boolean isActive = true;
 
     // Relacionamento com USER (1:1)
-    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "logins", cascade = CascadeType.ALL)
     private UserEntity user;
 
     // ----------- SPRING SECURITY -----------

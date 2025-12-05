@@ -1,4 +1,4 @@
-CREATE TABLE MUSIC (
+CREATE TABLE musics (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     audio_url VARCHAR(500) NOT NULL,
@@ -11,15 +11,15 @@ CREATE TABLE MUSIC (
 
     is_active TINYINT(1) NOT NULL DEFAULT 1,
 
-    CONSTRAINT fk_music_user
-        FOREIGN KEY (user_id) REFERENCES USER(user_id)
+    CONSTRAINT fk_musics_users
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
         ON DELETE CASCADE,
 
-    CONSTRAINT fk_music_album
-        FOREIGN KEY (album_id) REFERENCES ALBUM(id)
+    CONSTRAINT fk_musics_albums
+        FOREIGN KEY (album_id) REFERENCES albums(id)
         ON DELETE SET NULL,
 
-    CONSTRAINT fk_music_genre
-        FOREIGN KEY (genre_id) REFERENCES GENRE(id)
+    CONSTRAINT fk_musics_genres
+        FOREIGN KEY (genre_id) REFERENCES genres(id)
         ON DELETE SET NULL
 );

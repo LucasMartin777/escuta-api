@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "FOLLOW_PROFILE")
+@Table(name = "follows_profiles")
 @Getter
 @Setter
 @NoArgsConstructor

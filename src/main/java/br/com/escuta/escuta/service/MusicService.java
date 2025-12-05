@@ -49,8 +49,8 @@ public class MusicService {
 
         MusicEntity musicEntity = MusicMapper.toEntity(request);
         musicEntity.setAlbum(album);
-        musicEntity.setUser(user);
-        musicEntity.setGenre(genre);
+        musicEntity.setUsers(user);
+        musicEntity.setGenres(genre);
 
         musicEntityRepository.save(musicEntity);
 
@@ -69,7 +69,7 @@ public class MusicService {
         MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
 
         ownershipService.validateOwnershipMusic(
-                musicEntity.getUser().getId(),
+                musicEntity.getUsers().getId(),
                 user.getId()
         );
 
@@ -100,7 +100,7 @@ public class MusicService {
                 .orElseThrow(() -> new RuntimeException("Música não encontrada"));
 
         ownershipService.validateOwnershipMusic(
-                musicEntity.getUser().getId(),
+                musicEntity.getUsers().getId(),
                 user.getId()
         );
 
@@ -110,7 +110,7 @@ public class MusicService {
                 .ifPresent(genreId -> {
                     GenreEntity genre = genreRepository.findById(genreId)
                             .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
-                    musicEntity.setGenre(genre);
+                    musicEntity.setGenres(genre);
                 });
 
         return MusicMapper.toDetailsResponse(musicEntity);

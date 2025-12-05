@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Table(name = "PLAYLIST")
+@Table(name = "playlists")
 @Entity
 @Setter
 @Getter
@@ -32,11 +32,11 @@ public class PlaylistEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity users;
 
     @ManyToMany
     @JoinTable(
-            name = "PLAYLIST_MUSIC",
+            name = "playlists_musics",
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "music_id")
     )

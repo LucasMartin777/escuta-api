@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "GENRE")
+@Table(name = "genres")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class GenreEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genres")
     private List<MusicEntity> musics;
 
     @Builder.Default

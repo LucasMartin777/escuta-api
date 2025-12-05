@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Table(name = "ALBUM")
+@Table(name = "albums")
 @Entity
 @Getter
 @Setter
@@ -32,7 +32,7 @@ public class AlbumEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity users;
 
     @Builder.Default
     private Boolean isActive = true;

@@ -1,4 +1,4 @@
-CREATE TABLE USER (
+CREATE TABLE users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     profile_photo VARCHAR(500),
     description VARCHAR(500),
@@ -10,8 +10,8 @@ CREATE TABLE USER (
 
     login_id BIGINT NOT NULL,
 
-    CONSTRAINT fk_user_login
-        FOREIGN KEY (login_id) REFERENCES LOGIN(login_id),
+    CONSTRAINT fk_users_logins
+        FOREIGN KEY (login_id) REFERENCES logins(login_id),
 
-    CONSTRAINT uk_user_login UNIQUE (login_id)
+    CONSTRAINT uk_users_logins UNIQUE (login_id)
 );

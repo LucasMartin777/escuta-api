@@ -1,4 +1,4 @@
-CREATE TABLE ALBUM (
+CREATE TABLE albums (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     album_duration INT,
@@ -10,7 +10,7 @@ CREATE TABLE ALBUM (
 
     is_active TINYINT(1) NOT NULL DEFAULT 1,
 
-    CONSTRAINT fk_album_user
-        FOREIGN KEY (user_id) REFERENCES user(user_id)
+    CONSTRAINT fk_albums_users
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
         ON DELETE CASCADE
 );

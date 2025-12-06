@@ -8,6 +8,7 @@ import br.com.escuta.escuta.mapper.UserMapper;
 import br.com.escuta.escuta.repository.LoginRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,23 +26,20 @@ public class UserService {
 
     public UserSettingsResponse userSettingsResponse(LoginEntity login) {
         LoginEntity user1 = repository.getReferenceById(login.getId());
-        return UserMapper.toUserSettingsResponse(user1);
+        return UserMapper.toUserSettingsResponse(user1.getUser());
     }
 
-    public UserResponse userUpdate(LoginEntity login, UserUpdateRequest request) {
+    @Transactional
+    public UserSettingsResponse userUpdate(LoginEntity login, UserUpdateRequest request) {
 
-        String senhaCriptografada = createPasswordService.passwordEncoder(request.password());
-
-        Optional.ofNullable(senhaCriptografada)
-                .filter(n -> !n.isBlank())
+        Optional.ofNullable(request.password())
+                .filter(p -> !p.isBlank())
+                .map(createPasswordService::passwordEncoder)
                 .ifPresent(login::setPassword);
 
-        login.update(request);
+        login.getUser().update(request);
 
-
-        repository.save(login);
-
-        return UserMapper.toUserResponse(login);
+        return UserMapper.toUserSettingsResponse(login.getUser());
     }
 }
 

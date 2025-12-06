@@ -34,7 +34,7 @@ public class UserController {
 
     @PatchMapping("/settings")
     @ResponseStatus(HttpStatus.OK)
-    public UserResponse update(@AuthenticationPrincipal LoginEntity user,
+    public UserSettingsResponse update(@AuthenticationPrincipal LoginEntity user,
                                @RequestBody @Valid UserUpdateRequest userUpdateRequest) {
         return userService.userUpdate(user, userUpdateRequest);
 

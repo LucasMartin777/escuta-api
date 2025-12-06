@@ -5,7 +5,6 @@ import br.com.escuta.escuta.controller.response.UserRegisterResponse;
 import br.com.escuta.escuta.controller.response.UserResponse;
 import br.com.escuta.escuta.controller.response.UserSettingsResponse;
 import br.com.escuta.escuta.entity.LoginEntity;
-import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.entity.UserEntity;
 
 import java.util.List;
@@ -30,30 +29,42 @@ public class UserMapper {
 
     }
 
-    public static UserResponse toUserResponse(LoginEntity user) {
+    public static UserResponse toUserResponse(LoginEntity login) {
         return UserResponse.builder()
-                .id(user.getId())
-                .userName(user.getName())
-                .email(user.getEmail())
-                .description(user.getUser().getDescription())
-                .profilePhoto(user.getPerfil().getProfilePhoto())
-                .playlists(user.getPlaylists() != null ?
-                        user.getPlaylists().stream().map(PlaylistMapper::toDetailsResponse).toList()
-                        : List.of())
-                .musicas(user.getMusics() != null ?
-                        user.getMusics().stream().map(MusicMapper::toDetailsResponse).toList()
-                        : List.of())
-                .albuns(user.getAlbums() != null ?
-                        user.getAlbums().stream().map(AlbumMapper::toDetailsResponse).toList()
-                        : List.of())
+                .id(login.getId())
+                .userName(login.getUser().getName())
+                .email(login.getEmail())
+                .description(login.getUser().getDescription())
+                .profilePhoto(login.getUser().getProfilePhoto())
+                .playlists(
+                        login.getUser().getPlaylists() == null
+                                ? List.of()
+                                : login.getUser().getPlaylists().stream()
+                                .map(PlaylistMapper::toDetailsResponse)
+                                .toList()
+                )
+                .musicas(
+                        login.getUser().getMusics() == null
+                                ? List.of()
+                                : login.getUser().getMusics().stream()
+                                .map(MusicMapper::toDetailsResponse)
+                                .toList()
+                )
+                .albuns(
+                        login.getUser().getAlbums() == null
+                                ? List.of()
+                                : login.getUser().getAlbums().stream()
+                                .map(AlbumMapper::toDetailsResponse)
+                                .toList()
+                )
                 .build();
     }
-    public static UserSettingsResponse toUserSettingsResponse(UserLoginEntity user) {
-        return UserSettingsResponse.builder()
 
+    public static UserSettingsResponse toUserSettingsResponse(UserEntity user) {
+        return UserSettingsResponse.builder()
                 .userName(user.getName())
-                .description(user.getPerfil().getDescription())
-                .profilePhoto(user.getPerfil().getProfilePhoto())
+                .description(user.getDescription())
+                .profilePhoto(user.getProfilePhoto())
                 .build();
     }
 }

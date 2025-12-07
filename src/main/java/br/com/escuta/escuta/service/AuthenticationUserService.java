@@ -1,6 +1,6 @@
 package br.com.escuta.escuta.service;
 
-import br.com.escuta.escuta.entity.UserLoginEntity;
+import br.com.escuta.escuta.entity.LoginEntity;
 import br.com.escuta.escuta.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +24,7 @@ public class AuthenticationUserService implements UserDetailsService {
     public Long getAuthenticatedUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof UserLoginEntity user) {
+        if (principal instanceof LoginEntity user) {
             return user.getId();
         }
         return null;

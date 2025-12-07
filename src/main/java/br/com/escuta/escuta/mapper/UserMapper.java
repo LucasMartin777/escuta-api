@@ -1,6 +1,5 @@
 package br.com.escuta.escuta.mapper;
 
-import br.com.escuta.escuta.controller.request.UserRegisterRequest;
 import br.com.escuta.escuta.controller.response.UserRegisterResponse;
 import br.com.escuta.escuta.controller.response.UserResponse;
 import br.com.escuta.escuta.controller.response.UserSettingsResponse;
@@ -11,22 +10,12 @@ import java.util.List;
 
 public class UserMapper {
 
-    public static UserEntity toEntity(UserRegisterRequest request) {
-        return UserEntity.builder()
-
-                .name(request.name())
-                .dateOfBirth(request.dateOfBirth())
-                .createdAt(request.createdAt())
-                .build();
-    }
-
     public static UserRegisterResponse toDetaislResponse(UserEntity userEntity) {
         return UserRegisterResponse.builder()
                 .id(userEntity.getId())
                 .profilePhoto(userEntity.getProfilePhoto())
                 .description(userEntity.getDescription())
                 .build();
-
     }
 
     public static UserResponse toUserResponse(LoginEntity login) {

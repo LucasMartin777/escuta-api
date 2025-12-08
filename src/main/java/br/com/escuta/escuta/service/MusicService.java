@@ -4,15 +4,9 @@ import br.com.escuta.escuta.controller.request.MusicRequest;
 import br.com.escuta.escuta.controller.request.MusicUpdateRequest;
 import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
 import br.com.escuta.escuta.controller.response.MusicSumaryResponse;
-import br.com.escuta.escuta.entity.AlbumEntity;
-import br.com.escuta.escuta.entity.GenreEntity;
-import br.com.escuta.escuta.entity.LoginEntity;
-import br.com.escuta.escuta.entity.MusicEntity;
+import br.com.escuta.escuta.entity.*;
 import br.com.escuta.escuta.mapper.MusicMapper;
-import br.com.escuta.escuta.repository.AlbumRepository;
-import br.com.escuta.escuta.repository.GenreRepository;
-import br.com.escuta.escuta.repository.LoginRepository;
-import br.com.escuta.escuta.repository.MusicEntityRepository;
+import br.com.escuta.escuta.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,12 +26,14 @@ public class MusicService {
     private final MusicEntityRepository musicEntityRepository;
     private final LoginRepository loginRepository;
     private final OwnershipService ownershipService;
+    private final UserRepository userRepository;
 
     @Transactional
     public MusicDetailsResponse create(MusicRequest request) {
 
-        Long userId = authenticationUserService.getAuthenticatedUserId();
-        LoginEntity user = loginRepository.getReferenceById(userId);
+        Long userId = authenticationUserService.getAuthenticatedLoginId();
+        LoginEntity userLogin = loginRepository.getReferenceById(userId);
+        UserEntity user = userRepository.getReferenceById(userLogin.getId());
 
 
         GenreEntity genre = genreRepository.findById(request.genreId())
@@ -53,7 +49,7 @@ public class MusicService {
 
         MusicEntity musicEntity = MusicMapper.toEntity(request);
         musicEntity.setAlbum(album);
-        musicEntity.setUserLogin(user);
+        musicEntity.setUser(user);
         musicEntity.setGenre(genre);
 
         musicEntityRepository.save(musicEntity);
@@ -65,14 +61,18 @@ public class MusicService {
     @Transactional
     public void logicalDelete(Long id) {
 
-        Long userAuthenticated = authenticationUserService.getAuthenticatedUserId();
+        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+
+        LoginEntity userLogin = loginRepository.getReferenceById(loginId);
+        UserEntity user = userLogin.getUser();
 
         MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
 
         ownershipService.validateOwnershipMusic(
-                musicEntity.getUserLogin().getId(),
-                userAuthenticated
+                musicEntity.getUser().getId(),
+                user.getId()
         );
+
         musicEntity.logicalExclusion();
     }
 
@@ -91,26 +91,28 @@ public class MusicService {
     @Transactional
     public MusicDetailsResponse update(Long id, MusicUpdateRequest request) {
 
-        Long userAuthenticated = authenticationUserService.getAuthenticatedUserId();
+        Long loginId = authenticationUserService.getAuthenticatedLoginId();
 
-        MusicEntity music = musicEntityRepository.findById(id)
+        LoginEntity userLogin = loginRepository.getReferenceById(loginId);
+        UserEntity user = userLogin.getUser();
+
+        MusicEntity musicEntity = musicEntityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Música não encontrada"));
 
         ownershipService.validateOwnershipMusic(
-                music.getUserLogin().getId(),
-                userAuthenticated
+                musicEntity.getUser().getId(),
+                user.getId()
         );
 
-        music.update(request);
+        musicEntity.update(request);
 
         Optional.ofNullable(request.genreId())
                 .ifPresent(genreId -> {
                     GenreEntity genre = genreRepository.findById(genreId)
                             .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
-                    music.setGenre(genre);
+                    musicEntity.setGenre(genre);
                 });
 
-        musicEntityRepository.save(music);
-        return MusicMapper.toDetailsResponse(music);
+        return MusicMapper.toDetailsResponse(musicEntity);
     }
 }

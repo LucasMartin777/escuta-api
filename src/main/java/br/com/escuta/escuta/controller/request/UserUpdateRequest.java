@@ -1,8 +1,8 @@
 package br.com.escuta.escuta.controller.request;
 
-public record PerfilUpdateRequest(
+public record UserUpdateRequest(
 
-        String userName,
+        String name,
         String description,
         String password,
         String profilePhoto

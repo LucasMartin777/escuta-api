@@ -6,16 +6,16 @@ import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
 import br.com.escuta.escuta.controller.response.MusicSumaryResponse;
 import br.com.escuta.escuta.entity.AlbumEntity;
 import br.com.escuta.escuta.entity.GenreEntity;
+import br.com.escuta.escuta.entity.LoginEntity;
 import br.com.escuta.escuta.entity.MusicEntity;
 import br.com.escuta.escuta.entity.UserLoginEntity;
 import br.com.escuta.escuta.mapper.MusicMapper;
 import br.com.escuta.escuta.repository.AlbumRepository;
 import br.com.escuta.escuta.repository.GenreRepository;
 import br.com.escuta.escuta.repository.MusicEntityRepository;
-import br.com.escuta.escuta.repository.UserLoginRepository;
+import br.com.escuta.escuta.repository.LoginRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,14 +31,14 @@ public class MusicService {
     private final GenreRepository genreRepository;
     private final AlbumRepository albumRepository;
     private final MusicEntityRepository musicEntityRepository;
-    private final UserLoginRepository userLoginRepository;
+    private final LoginRepository loginRepository;
     private final OwnershipService ownershipService;
 
     @Transactional
     public MusicDetailsResponse create(MusicRequest request) {
 
         Long userId = authenticationUserService.getAuthenticatedUserId();
-        UserLoginEntity user = userLoginRepository.getReferenceById(userId);
+        LoginEntity user = loginRepository.getReferenceById(userId);
 
 
         GenreEntity genre = genreRepository.findById(request.genreId())

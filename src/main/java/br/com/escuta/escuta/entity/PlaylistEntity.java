@@ -31,8 +31,8 @@ public class PlaylistEntity {
     private LocalDate registrationDate;
 
     @ManyToOne
-    @JoinColumn(name = "login_id")
-    private UserLoginEntity userLogin;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @ManyToMany
     @JoinTable(

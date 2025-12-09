@@ -1,8 +1,7 @@
 package br.com.escuta.escuta.service;
 
 import br.com.escuta.escuta.entity.UserLoginEntity;
-import br.com.escuta.escuta.repository.UserLoginRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.escuta.escuta.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +13,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationUserService implements UserDetailsService {
 
-    private final UserLoginRepository userLoginRepository;
+    private final LoginRepository loginRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userLoginRepository.findByEmail(email)
+        return loginRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

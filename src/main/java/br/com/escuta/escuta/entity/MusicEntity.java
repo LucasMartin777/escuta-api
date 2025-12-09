@@ -29,6 +29,7 @@ public class MusicEntity {
     @Column(name = "audio_url")
     private String audioUrl;
 
+    @Column(name = "release_date")
     private LocalDate releaseDate;
 
     @Column(name = "single_cover")
@@ -38,8 +39,8 @@ public class MusicEntity {
     private List<PlaylistEntity> playlists;
 
     @ManyToOne
-    @JoinColumn(name = "login_id")
-    private UserLoginEntity userLogin;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
@@ -53,17 +54,25 @@ public class MusicEntity {
     @Builder.Default
     private Boolean isActive = true;
 
-    public void update(MusicUpdateRequest request){
+    public void update(MusicUpdateRequest request) {
 
-        Optional.ofNullable(request.name()).filter(n->!n.isBlank()).ifPresent(this::setName);
+        Optional.ofNullable(request.name())
+                .filter(n -> !n.isBlank())
+                .ifPresent(this::setName);
+
         Optional.ofNullable(request.singleCover())
-                .filter(n->!n.isBlank())
+                .filter(n -> !n.isBlank())
                 .ifPresent(this::setSingleCover);
-        Optional.ofNullable(request.genreId()).ifPresent(this::setId);
+
+        Optional.ofNullable(request.genreId())
+                .ifPresent(genreId -> {
+                    GenreEntity g = new GenreEntity();
+                    g.setId(genreId);
+                    this.setGenre(g);
+                });
     }
 
     public void logicalExclusion() {
         this.isActive = false;
     }
 }
-

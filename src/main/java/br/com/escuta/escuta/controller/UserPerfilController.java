@@ -1,10 +1,10 @@
 package br.com.escuta.escuta.controller;
 
-import br.com.escuta.escuta.controller.request.PerfilUpdateRequest;
-import br.com.escuta.escuta.controller.response.UserPerfilResponse;
-import br.com.escuta.escuta.controller.response.UserPerfilSettingsResponse;
-import br.com.escuta.escuta.entity.UserLoginEntity;
-import br.com.escuta.escuta.service.UserPerfilService;
+import br.com.escuta.escuta.controller.request.UserUpdateRequest;
+import br.com.escuta.escuta.controller.response.UserResponse;
+import br.com.escuta.escuta.controller.response.UserSettingsResponse;
+import br.com.escuta.escuta.entity.LoginEntity;
+import br.com.escuta.escuta.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,25 +18,25 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = "bearer-key")
 public class UserPerfilController {
 
-    private final UserPerfilService userPerfilService;
+    private final UserService userService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public UserPerfilResponse myProfile(@AuthenticationPrincipal UserLoginEntity user) {
-        return userPerfilService.perfilResponse(user);
+    public UserResponse myProfile(@AuthenticationPrincipal LoginEntity user) {
+        return userService.perfilResponse(user);
     }
 
     @GetMapping("/settings")
     @ResponseStatus(HttpStatus.OK)
-    public UserPerfilSettingsResponse updateInformations(@AuthenticationPrincipal UserLoginEntity user) {
-        return userPerfilService.perfilSettingsResponse(user);
+    public UserSettingsResponse updateInformations(@AuthenticationPrincipal LoginEntity user) {
+        return userService.userSettingsResponse(user);
     }
 
     @PatchMapping("/settings")
     @ResponseStatus(HttpStatus.OK)
-    public UserPerfilResponse update(@AuthenticationPrincipal UserLoginEntity user,
-                                     @RequestBody @Valid PerfilUpdateRequest perfilUpdateRequest) {
-        return userPerfilService.perfilUpdate(user, perfilUpdateRequest);
+    public UserResponse update(@AuthenticationPrincipal LoginEntity user,
+                               @RequestBody @Valid UserUpdateRequest userUpdateRequest) {
+        return userService.perfilUpdate(user, userUpdateRequest);
 
     }
 }

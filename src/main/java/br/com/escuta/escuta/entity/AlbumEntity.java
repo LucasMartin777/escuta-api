@@ -31,8 +31,8 @@ public class AlbumEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "login_id")
-    private UserLoginEntity userLogin;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @Builder.Default
     private Boolean isActive = true;

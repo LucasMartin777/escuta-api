@@ -1,6 +1,6 @@
 package br.com.escuta.escuta.controller.request;
 
-public record UserLoginAuthRequest(
+public record LoginAuthRequest(
 
         String email,
 

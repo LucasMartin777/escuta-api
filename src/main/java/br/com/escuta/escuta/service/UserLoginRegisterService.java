@@ -1,10 +1,11 @@
 package br.com.escuta.escuta.service;
 
-import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
-import br.com.escuta.escuta.controller.response.UserLoginDetaisResponse;
-import br.com.escuta.escuta.entity.UserPerfilEntity;
-import br.com.escuta.escuta.mapper.UserLoginMapper;
-import br.com.escuta.escuta.repository.UserLoginRepository;
+import br.com.escuta.escuta.controller.request.LoginRegisterRequest;
+import br.com.escuta.escuta.controller.response.LoginDetaisResponse;
+import br.com.escuta.escuta.entity.UserEntity;
+import br.com.escuta.escuta.mapper.LoginMapper;
+import br.com.escuta.escuta.mapper.UserMapper;
+import br.com.escuta.escuta.repository.LoginRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,29 +16,30 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserLoginRegisterService {
 
-    private final UserLoginRepository userLoginRepository;
+    private final LoginRepository loginRepository;
     private final PasswordEncoder passwordEncoder;
     private final CreatePasswordService createPasswordService;
 
     @Transactional
-    public UserLoginDetaisResponse register(UserLoginRegisterRequest request) {
+    public LoginDetaisResponse register(LoginRegisterRequest request) {
 
-        var userLogin = UserLoginMapper.toEntity(request);
+        var login = LoginMapper.toEntity(request);
 
         String senhaCriptografada = createPasswordService.passwordEncoder(request.password());
 
-        userLogin.setPassword(senhaCriptografada);
+        login.setPassword(senhaCriptografada);
 
-        var perfil = UserPerfilEntity.builder()
+        UserEntity user = UserEntity.builder()
+                .name(request.name())
                 .profilePhoto(null)
                 .description(null)
                 .build();
 
-        perfil.setUserLogin(userLogin);
-        userLogin.setPerfil(perfil);
+        user.setLogin(login);
+        login.setUser(user);
 
-        userLoginRepository.save(userLogin);
+        loginRepository.save(login);
 
-        return UserLoginMapper.toDetaislResponse(userLogin);
+        return LoginMapper.toDetaislResponse(login);
     }
 }

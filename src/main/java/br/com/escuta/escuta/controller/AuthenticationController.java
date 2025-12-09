@@ -1,10 +1,10 @@
 package br.com.escuta.escuta.controller;
 
 
-import br.com.escuta.escuta.controller.request.UserLoginAuthRequest;
-import br.com.escuta.escuta.controller.request.UserLoginRegisterRequest;
-import br.com.escuta.escuta.controller.response.UserLoginDetaisResponse;
-import br.com.escuta.escuta.entity.UserLoginEntity;
+import br.com.escuta.escuta.controller.request.LoginAuthRequest;
+import br.com.escuta.escuta.controller.request.LoginRegisterRequest;
+import br.com.escuta.escuta.controller.response.LoginDetaisResponse;
+import br.com.escuta.escuta.entity.LoginEntity;
 import br.com.escuta.escuta.security.DadosTokenJWT;
 import br.com.escuta.escuta.security.TokenService;
 import br.com.escuta.escuta.service.UserLoginRegisterService;
@@ -27,12 +27,12 @@ public class AuthenticationController {
     private final UserLoginRegisterService userLoginRegisterService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid UserLoginAuthRequest request) {
+    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid LoginAuthRequest request) {
 
         var token = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         var authentication = manager.authenticate(token);
 
-        var tokenJWT = tokenService.gerarToken((UserLoginEntity) authentication.getPrincipal());
+        var tokenJWT = tokenService.gerarToken((LoginEntity) authentication.getPrincipal());
 
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
@@ -40,8 +40,8 @@ public class AuthenticationController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
 
-    public UserLoginDetaisResponse efetuarLogin(
-            @RequestBody @Valid UserLoginRegisterRequest request) {
+    public LoginDetaisResponse efetuarLogin(
+            @RequestBody @Valid LoginRegisterRequest request) {
         return userLoginRegisterService.register(request);
     }
 }

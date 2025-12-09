@@ -19,12 +19,12 @@ public class FollowProfileEntity {
     @ManyToOne
     @MapsId("followerId")
     @JoinColumn(name = "follower_id")
-    private UserLoginEntity follower;
+    private UserEntity follower;
 
     @ManyToOne
     @MapsId("followingId")
     @JoinColumn(name = "following_id")
-    private UserLoginEntity following;
+    private UserEntity following;
 
     private LocalDate followDate;
 }

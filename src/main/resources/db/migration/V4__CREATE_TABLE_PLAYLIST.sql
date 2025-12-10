@@ -4,9 +4,12 @@ CREATE TABLE PLAYLIST (
     cover VARCHAR(500),
     is_public BOOLEAN DEFAULT TRUE,
     registration_date DATE,
-    login_id BIGINT NOT NULL,
-    is_active tinyint(1) not null default 1,
-    CONSTRAINT fk_playlist_login
-        FOREIGN KEY (login_id) REFERENCES user_login(id)
+
+    user_id BIGINT NOT NULL,
+
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+
+    CONSTRAINT fk_playlist_user
+        FOREIGN KEY (user_id) REFERENCES user(user_id)
         ON DELETE CASCADE
 );

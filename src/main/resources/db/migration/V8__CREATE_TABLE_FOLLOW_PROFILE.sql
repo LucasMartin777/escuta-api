@@ -6,10 +6,10 @@ CREATE TABLE FOLLOW_PROFILE (
     PRIMARY KEY (follower_id, following_id),
 
     CONSTRAINT fk_follow_follower
-        FOREIGN KEY (follower_id) REFERENCES user_login(id)
+        FOREIGN KEY (follower_id) REFERENCES USER(user_id)
         ON DELETE CASCADE,
 
     CONSTRAINT fk_follow_following
-        FOREIGN KEY (following_id) REFERENCES user_login(id)
+        FOREIGN KEY (following_id) REFERENCES USER(user_id)
         ON DELETE CASCADE
 );

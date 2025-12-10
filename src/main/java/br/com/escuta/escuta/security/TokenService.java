@@ -1,7 +1,6 @@
 package br.com.escuta.escuta.security;
 
 import br.com.escuta.escuta.entity.LoginEntity;
-import br.com.escuta.escuta.entity.UserLoginEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

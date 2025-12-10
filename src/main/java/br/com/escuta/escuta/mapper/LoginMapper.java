@@ -10,7 +10,6 @@ public class LoginMapper {
 
                 .email(request.email())
                 .password(request.password())
-                .createdAt(request.createdAt())
                 .build();
     }
 
@@ -18,7 +17,6 @@ public class LoginMapper {
         return LoginDetaisResponse.builder()
                 .id(loginEntity.getId())
                 .email(loginEntity.getEmail())
-                .createdAt(loginEntity.getCreatedAt())
                 .userRegisterResponse(UserMapper.toDetaislResponse(loginEntity.getUser()))
                 .build();
     }

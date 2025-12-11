@@ -6,6 +6,8 @@ import lombok.Builder;
 public record UserRegisterResponse(
 
         Long id,
+        String name,
         String profilePhoto,
         String description
-){}
+) {
+}

@@ -36,8 +36,8 @@ public class LoginEntity implements UserDetails {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Builder.Default
-    private Boolean isActive = true;
+//    @Builder.Default
+//    private Boolean isActive = true;
 
     // Relacionamento com USER (1:1)
     @OneToOne(mappedBy = "logins", cascade = CascadeType.ALL)
@@ -79,9 +79,9 @@ public class LoginEntity implements UserDetails {
         return true;
     }
 
-    public void logicalExclusion() {
-        this.isActive = false;
-    }
+//    public void logicalExclusion() {
+//        this.isActive = false;
+//    }
 
 }
 

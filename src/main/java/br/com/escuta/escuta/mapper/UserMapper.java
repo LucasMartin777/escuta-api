@@ -13,6 +13,7 @@ public class UserMapper {
     public static UserRegisterResponse toDetaislResponse(UserEntity userEntity) {
         return UserRegisterResponse.builder()
                 .id(userEntity.getId())
+                .name(userEntity.getName())
                 .profilePhoto(userEntity.getProfilePhoto())
                 .description(userEntity.getDescription())
                 .build();

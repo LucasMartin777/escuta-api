@@ -18,6 +18,7 @@ public class UserService {
 
     private final LoginRepository repository;
     private final CreatePasswordService createPasswordService;
+    private final LoginRepository loginRepository;
 
     public UserResponse userResponse(LoginEntity login) {
         LoginEntity user1 = repository.getReferenceById(login.getId());
@@ -30,7 +31,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserSettingsResponse userUpdate(LoginEntity login, UserUpdateRequest request) {
+    public UserSettingsResponse userUpdate(LoginEntity loginId, UserUpdateRequest request) {
+
+        LoginEntity login = loginRepository.findById(loginId.getId())
+                .orElseThrow(() -> new RuntimeException("Login não encontrado"));
 
         Optional.ofNullable(request.password())
                 .filter(p -> !p.isBlank())

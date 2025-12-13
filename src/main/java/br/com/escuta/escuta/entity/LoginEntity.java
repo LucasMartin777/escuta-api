@@ -40,7 +40,7 @@ public class LoginEntity implements UserDetails {
 //    private Boolean isActive = true;
 
     // Relacionamento com USER (1:1)
-    @OneToOne(mappedBy = "logins", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
     private UserEntity user;
 
     // ----------- SPRING SECURITY -----------

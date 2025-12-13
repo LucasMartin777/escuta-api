@@ -1,7 +1,6 @@
 CREATE TABLE albums (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    album_duration INT,
     album_cover VARCHAR(500),
     description VARCHAR(500),
     release_date DATE,

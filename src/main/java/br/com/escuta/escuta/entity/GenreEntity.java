@@ -21,7 +21,7 @@ public class GenreEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "genres")
+    @OneToMany(mappedBy = "genre")
     private List<MusicEntity> musics;
 
     @Builder.Default

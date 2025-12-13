@@ -4,14 +4,15 @@ import br.com.escuta.escuta.controller.request.AlbumRequest;
 import br.com.escuta.escuta.controller.response.AlbumDetailsResponse;
 import br.com.escuta.escuta.controller.response.AlbumSumaryResponse;
 import br.com.escuta.escuta.entity.AlbumEntity;
+import br.com.escuta.escuta.entity.UserEntity;
 
 public class AlbumMapper {
-    public static AlbumEntity toEntity(AlbumRequest request) {
+    public static AlbumEntity toEntity(AlbumRequest request, UserEntity user) {
         return AlbumEntity.builder()
                 .name(request.name())
-                .albumDuration(request.albumDuration())
                 .albumCover(request.albumCover())
                 .description(request.description())
+                .user(user)
                 .build();
     }
 
@@ -19,7 +20,6 @@ public class AlbumMapper {
         return AlbumDetailsResponse.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .albumDuration(entity.getAlbumDuration())
                 .albumCover(entity.getAlbumCover())
                 .releaseDate(entity.getReleaseDate())
                 .description(entity.getDescription())

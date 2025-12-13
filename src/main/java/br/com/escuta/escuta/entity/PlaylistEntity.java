@@ -32,7 +32,7 @@ public class PlaylistEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity users;
+    private UserEntity user;
 
     @ManyToMany
     @JoinTable(
@@ -40,7 +40,7 @@ public class PlaylistEntity {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "music_id")
     )
-    private List<MusicEntity> musics;
+    private List<MusicEntity> music;
 
     @Builder.Default
     private Boolean isActive = true;

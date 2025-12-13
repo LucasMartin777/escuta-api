@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "albums")
 @Entity
@@ -20,8 +22,8 @@ public class AlbumEntity {
 
     private String name;
 
-    @Column(name = "album_duration")
-    private int albumDuration;
+//    @Column(name = "album_duration")
+//    private int albumDuration;
 
     private LocalDate releaseDate;
 
@@ -32,7 +34,10 @@ public class AlbumEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity users;
+    private UserEntity user;
+
+    @OneToMany(mappedBy = "album")
+    private List<MusicEntity> musics = new ArrayList<>();
 
     @Builder.Default
     private Boolean isActive = true;

@@ -23,7 +23,7 @@ public class MusicService {
     private final AuthenticationUserService authenticationUserService;
     private final GenreRepository genreRepository;
     private final AlbumRepository albumRepository;
-    private final MusicEntityRepository musicEntityRepository;
+    private final MusicRepository musicRepository;
     private final LoginRepository loginRepository;
     private final OwnershipService ownershipService;
     private final UserRepository userRepository;
@@ -49,10 +49,10 @@ public class MusicService {
 
         MusicEntity musicEntity = MusicMapper.toEntity(request);
         musicEntity.setAlbum(album);
-        musicEntity.setUsers(user);
-        musicEntity.setGenres(genre);
+        musicEntity.setUser(user);
+        musicEntity.setGenre(genre);
 
-        musicEntityRepository.save(musicEntity);
+        musicRepository.save(musicEntity);
 
 
         return MusicMapper.toDetailsResponse(musicEntity);
@@ -66,10 +66,10 @@ public class MusicService {
         LoginEntity userLogin = loginRepository.getReferenceById(loginId);
         UserEntity user = userLogin.getUser();
 
-        MusicEntity musicEntity = musicEntityRepository.getReferenceById(id);
+        MusicEntity musicEntity = musicRepository.getReferenceById(id);
 
         ownershipService.validateOwnershipMusic(
-                musicEntity.getUsers().getId(),
+                musicEntity.getUser().getId(),
                 user.getId()
         );
 
@@ -78,13 +78,13 @@ public class MusicService {
 
     public MusicDetailsResponse musics(Long id) {
 
-        MusicEntity music = musicEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Musica nao encontrada"));
+        MusicEntity music = musicRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Musica nao encontrada"));
         return MusicMapper.toDetailsResponse(music);
     }
 
     public Page<MusicSumaryResponse> listMusics(Pageable pageable) {
 
-        return musicEntityRepository.findAllByIsActiveTrue(pageable)
+        return musicRepository.findAllByIsActiveTrue(pageable)
                 .map(MusicMapper::toSumaryResponse);
     }
 
@@ -96,11 +96,11 @@ public class MusicService {
         LoginEntity userLogin = loginRepository.getReferenceById(loginId);
         UserEntity user = userLogin.getUser();
 
-        MusicEntity musicEntity = musicEntityRepository.findById(id)
+        MusicEntity musicEntity = musicRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Música não encontrada"));
 
         ownershipService.validateOwnershipMusic(
-                musicEntity.getUsers().getId(),
+                musicEntity.getUser().getId(),
                 user.getId()
         );
 
@@ -110,7 +110,7 @@ public class MusicService {
                 .ifPresent(genreId -> {
                     GenreEntity genre = genreRepository.findById(genreId)
                             .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
-                    musicEntity.setGenres(genre);
+                    musicEntity.setGenre(genre);
                 });
 
         return MusicMapper.toDetailsResponse(musicEntity);

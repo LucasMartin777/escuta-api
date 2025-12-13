@@ -35,16 +35,16 @@ public class MusicEntity {
     @Column(name = "single_cover")
     private String singleCover;
 
-    @ManyToMany(mappedBy = "musics")
+    @ManyToMany(mappedBy = "music")
     private List<PlaylistEntity> playlists;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity users;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
-    private GenreEntity genres;
+    private GenreEntity genre;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
@@ -68,7 +68,7 @@ public class MusicEntity {
                 .ifPresent(genreId -> {
                     GenreEntity g = new GenreEntity();
                     g.setId(genreId);
-                    this.setGenres(g);
+                    this.setGenre(g);
                 });
     }
 

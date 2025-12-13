@@ -9,7 +9,6 @@ public record AlbumDetailsResponse(
 
         Long id,
         String name,
-        int albumDuration,
         String albumCover,
         String description,
         LocalDate releaseDate

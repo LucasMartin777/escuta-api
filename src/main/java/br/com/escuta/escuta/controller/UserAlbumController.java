@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/album/me/musics")
@@ -19,10 +17,22 @@ public class UserAlbumController {
 
     private final AlbumService albumService;
 
-
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public AlbumDetailsResponse create(@RequestBody @Valid AlbumRequest request) {
         return albumService.create(request);
+    }
+
+//    @PatchMapping("{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public AlbumDetailsResponse update(@RequestBody @Valid AlbumRequest request,
+//                                       @PathVariable Long id) {
+//        return albumService.update(request, id);
+//    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        albumService.delete(id);
     }
 }

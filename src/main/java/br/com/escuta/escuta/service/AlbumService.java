@@ -15,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class AlbumService {
     private final MusicRepository musicRepository;
     private final LoginRepository loginRepository;
     private final MusicValidation musicValidation;
+    private final OwnershipService ownershipService;
 
     public AlbumDetailsResponse album(Long id) {
 
@@ -62,6 +64,27 @@ public class AlbumService {
         musicRepository.saveAll(validMusics);
 
         return AlbumMapper.toDetailsResponse(album);
+
+    }
+
+//    public AlbumDetailsResponse update(AlbumRequest request, Long id) {
+//        return AlbumDetailsResponse;
+//    }
+
+    @Transactional
+    public void delete(Long id) {
+        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+        UserEntity user = loginRepository.getReferenceById(loginId).getUser();
+
+        AlbumEntity album = albumRepository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(() -> new EntityNotFoundException("Album não encontrado"));
+
+        if (!ownershipService.validateOwner(
+                album.getUser().getId(),
+                user.getId())) {
+            throw new AccessDeniedException("Usuário não autorizado");
+        }
+        album.logicalExclusion();
 
     }
 }

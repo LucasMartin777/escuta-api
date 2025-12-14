@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,6 +36,18 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleBadCredentialsException(
             BadCredentialsException e, HttpServletRequest request) {
         return buildErrorResponse(request, e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleAccessDeniedException(
+            AccessDeniedException e,
+            HttpServletRequest request
+    ) {
+        return buildErrorResponse(
+                request,
+                e.getMessage(),
+                HttpStatus.FORBIDDEN
+        );
     }
 
     private record DadosErroValidacao(String campo, String mensagem) {

@@ -68,12 +68,18 @@ public class MusicService {
 
         MusicEntity musicEntity = musicRepository.getReferenceById(id);
 
-        ownershipService.validateOwnershipMusic(
+        boolean valid = ownershipService.validateOwner(
                 musicEntity.getUser().getId(),
                 user.getId()
         );
 
-        musicEntity.logicalExclusion();
+        if (valid) {
+            musicEntity.logicalExclusion();
+        } else {
+            throw new EntityNotFoundException("Nao autorixado");
+        }
+
+
     }
 
     public MusicDetailsResponse musics(Long id) {
@@ -99,7 +105,7 @@ public class MusicService {
         MusicEntity musicEntity = musicRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Música não encontrada"));
 
-        ownershipService.validateOwnershipMusic(
+        ownershipService.validateOwner(
                 musicEntity.getUser().getId(),
                 user.getId()
         );

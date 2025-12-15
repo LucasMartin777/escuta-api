@@ -21,7 +21,7 @@ public class AuthenticationUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public Long getAuthenticatedLoginId() {
+    public Long getAuthenticatedUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof LoginEntity user) {
@@ -29,6 +29,7 @@ public class AuthenticationUserService implements UserDetailsService {
         }
         return null;
     }
+
 
 
 }

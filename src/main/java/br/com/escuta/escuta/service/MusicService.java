@@ -31,7 +31,7 @@ public class MusicService {
     @Transactional
     public MusicDetailsResponse create(MusicRequest request) {
 
-        Long userId = authenticationUserService.getAuthenticatedLoginId();
+        Long userId = authenticationUserService.getAuthenticatedUserId();
         LoginEntity userLogin = loginRepository.getReferenceById(userId);
         UserEntity user = userRepository.getReferenceById(userLogin.getId());
 
@@ -61,26 +61,15 @@ public class MusicService {
     @Transactional
     public void logicalDelete(Long id) {
 
-        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+        Long authenticatedUserId = authenticationUserService.getAuthenticatedUserId();
 
-        LoginEntity userLogin = loginRepository.getReferenceById(loginId);
-        UserEntity user = userLogin.getUser();
+        MusicEntity musicEntity = musicRepository.findByIdAndUser_Id(id, authenticatedUserId)
+                .orElseThrow(() -> new EntityNotFoundException("Musica não encontrada para esse usuario"));
 
-        MusicEntity musicEntity = musicRepository.getReferenceById(id);
-
-        boolean valid = ownershipService.validateOwner(
-                musicEntity.getUser().getId(),
-                user.getId()
-        );
-
-        if (valid) {
-            musicEntity.logicalExclusion();
-        } else {
-            throw new EntityNotFoundException("Nao autorixado");
-        }
-
+        musicEntity.logicalExclusion();
 
     }
+
 
     public MusicDetailsResponse musics(Long id) {
 
@@ -97,7 +86,7 @@ public class MusicService {
     @Transactional
     public MusicDetailsResponse update(Long id, MusicUpdateRequest request) {
 
-        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+        Long loginId = authenticationUserService.getAuthenticatedUserId();
 
         LoginEntity userLogin = loginRepository.getReferenceById(loginId);
         UserEntity user = userLogin.getUser();

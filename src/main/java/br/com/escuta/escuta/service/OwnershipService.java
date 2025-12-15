@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 public class OwnershipService {
 
     public boolean validateOwner(Long ownerId, Long loggedUserId) {
-
         return ownerId.equals(loggedUserId);
     }
 }

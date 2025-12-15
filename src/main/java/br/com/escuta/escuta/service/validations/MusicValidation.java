@@ -16,7 +16,9 @@ public class MusicValidation {
 
     public boolean isValidMusic(MusicEntity music, UserEntity user) {
         return music.getIsActive()
-                && ownershipService.validateOwner(music.getUser().getId(), user.getId());
+                && ownershipService.validateOwner(
+                        music.getUser().getId(),
+                        user.getId());
     }
 
     public List<MusicEntity> filterValidMusics(List<MusicEntity> musics, UserEntity user) {

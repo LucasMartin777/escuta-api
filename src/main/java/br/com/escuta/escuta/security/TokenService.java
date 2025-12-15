@@ -20,13 +20,13 @@ public class TokenService {
 
     private static final String ISSUER = "escuta";
 
-    public String gerarToken(LoginEntity userEntity) {
+    public String gerarToken(LoginEntity loginEntity) {
         System.out.println(secret);
         try {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer(ISSUER)
-                    .withSubject(userEntity.getId().toString())// a quem esse token pertence
+                    .withSubject(loginEntity.getId().toString())// a quem esse token pertence
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception) {

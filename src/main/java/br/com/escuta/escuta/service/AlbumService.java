@@ -49,7 +49,7 @@ public class AlbumService {
     @Transactional
     public AlbumDetailsResponse create(AlbumRequest request) {
 
-        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+        Long loginId = authenticationUserService.getAuthenticatedUserId();
         UserEntity user = loginRepository.getReferenceById(loginId).getUser();
 
         List<MusicEntity> musics = musicRepository.findAllById(request.music());
@@ -67,13 +67,17 @@ public class AlbumService {
 
     }
 
-//    public AlbumDetailsResponse update(AlbumRequest request, Long id) {
+//    @Transactional
+//    public AlbumDetailsResponse update(Long id, AlbumRequest request) {
+//
+//
+//
 //        return AlbumDetailsResponse;
 //    }
 
     @Transactional
     public void delete(Long id) {
-        Long loginId = authenticationUserService.getAuthenticatedLoginId();
+        Long loginId = authenticationUserService.getAuthenticatedUserId();
         UserEntity user = loginRepository.getReferenceById(loginId).getUser();
 
         AlbumEntity album = albumRepository.findByIdAndIsActiveTrue(id)

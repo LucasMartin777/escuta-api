@@ -37,14 +37,14 @@ public class UserMapper {
                         login.getUser().getMusics() == null
                                 ? List.of()
                                 : login.getUser().getMusics().stream()
-                                .map(MusicMapper::toDetailsResponse)
+                                .map(MusicMapper::toSumaryResponse)
                                 .toList()
                 )
                 .albuns(
                         login.getUser().getAlbums() == null
                                 ? List.of()
                                 : login.getUser().getAlbums().stream()
-                                .map(AlbumMapper::toDetailsResponse)
+                                .map(AlbumMapper::toSumaryResponse)
                                 .toList()
                 )
                 .build();

@@ -13,5 +13,5 @@ public record MusicDetailsResponse(
         LocalDate releaseDate,
         String singleCover,
         GenreResponse genre,
-        AlbumDetailsResponse album
+        AlbumSumaryResponse album
 ) {}

@@ -1,11 +1,14 @@
 package br.com.escuta.escuta.entity;
 
+import br.com.escuta.escuta.controller.request.AlbumUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Table(name = "albums")
 @Entity
@@ -15,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@SQLRestriction("is_active = 1")
 public class AlbumEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,4 +50,17 @@ public class AlbumEntity {
         this.isActive = false;
     }
 
+    public void update(AlbumUpdateRequest request) {
+        Optional.ofNullable(request.name())
+                .filter(n -> !n.isBlank())
+                .ifPresent(this::setName);
+
+        Optional.ofNullable(request.albumCover())
+                .filter(n -> !n.isBlank())
+                .ifPresent(this::setAlbumCover);
+
+        Optional.ofNullable(request.description())
+                .filter(n -> !n.isBlank())
+                .ifPresent(this::setDescription);
+    }
 }

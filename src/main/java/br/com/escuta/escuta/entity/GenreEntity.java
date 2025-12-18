@@ -2,6 +2,7 @@ package br.com.escuta.escuta.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@SQLRestriction("is_active = 1")
 public class GenreEntity {
 
     @Id

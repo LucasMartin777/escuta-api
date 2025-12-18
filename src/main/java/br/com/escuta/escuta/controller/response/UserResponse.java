@@ -13,6 +13,6 @@ public record UserResponse(
         String profilePhoto,
         String description,
         List<PlaylistResponse> playlists,
-        List<MusicDetailsResponse> musicas,
-        List<AlbumDetailsResponse> albuns
+        List<MusicSumaryResponse> musicas,
+        List<AlbumSumaryResponse> albuns
 ){}

@@ -1,6 +1,7 @@
 package br.com.escuta.escuta.controller;
 
 import br.com.escuta.escuta.controller.request.AlbumRequest;
+import br.com.escuta.escuta.controller.request.AlbumUpdateRequest;
 import br.com.escuta.escuta.controller.response.AlbumDetailsResponse;
 import br.com.escuta.escuta.service.AlbumService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,12 +24,12 @@ public class UserAlbumController {
         return albumService.create(request);
     }
 
-//    @PatchMapping("{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public AlbumDetailsResponse update(@RequestBody @Valid AlbumRequest request,
-//                                       @PathVariable Long id) {
-//        return albumService.update(request, id);
-//    }
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AlbumDetailsResponse update(@RequestBody @Valid AlbumUpdateRequest request,
+                                       @PathVariable Long id) {
+        return albumService.update(id, request);
+    }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

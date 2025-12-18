@@ -2,6 +2,7 @@ package br.com.escuta.escuta.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@SQLRestriction("is_active = 1")
 public class PlaylistEntity {
 
     @Id

@@ -5,12 +5,11 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
-public record AlbumRequest(
+public record AlbumUpdateRequest(
 
-        @NotBlank
+
         String name,
 
-        @NotEmpty
         List<Long> music,
 
         String albumCover,

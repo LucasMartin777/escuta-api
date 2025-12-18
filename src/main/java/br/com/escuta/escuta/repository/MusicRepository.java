@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MusicRepository extends JpaRepository<MusicEntity, Long> {
@@ -13,4 +14,6 @@ public interface MusicRepository extends JpaRepository<MusicEntity, Long> {
 
     @Query("select m from MusicEntity m where m.id = ?1 and m.user.id = ?2")
     Optional<MusicEntity> findByIdAndUser_Id(Long id, Long id1);
+
+    List<MusicEntity> findByAlbum_Id(Long id);
 }

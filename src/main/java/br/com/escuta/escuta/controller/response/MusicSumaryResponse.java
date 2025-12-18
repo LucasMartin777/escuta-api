@@ -10,6 +10,7 @@ public record MusicSumaryResponse(
         Long id,
         String name,
         LocalDate releaseDate,
-        String singleCover
+        String singleCover,
+        Long albumId
 ){}
 

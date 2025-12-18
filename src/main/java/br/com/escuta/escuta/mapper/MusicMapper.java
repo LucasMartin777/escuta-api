@@ -14,12 +14,19 @@ public class MusicMapper {
                 .singleCover(request.singleCover())
                 .build();
     }
+
     public static MusicSumaryResponse toSumaryResponse(MusicEntity musicEntity) {
         return MusicSumaryResponse.builder()
                 .id(musicEntity.getId())
                 .name(musicEntity.getName())
                 .releaseDate(musicEntity.getReleaseDate())
                 .singleCover(musicEntity.getSingleCover())
+                .albumId(
+                        musicEntity.getAlbum() != null
+                                ? musicEntity.getAlbum().getId()
+                                : null
+                )
+
                 .build();
     }
 
@@ -32,7 +39,7 @@ public class MusicMapper {
                 .singleCover(musicEntity.getSingleCover())
                 .genre(GenreMapper.toDetailsResponse(musicEntity.getGenre()))
                 .album(musicEntity.getAlbum() != null
-                        ? AlbumMapper.toDetailsResponse(musicEntity.getAlbum())
+                        ? AlbumMapper.toSumaryResponse(musicEntity.getAlbum())
                         : null)
                 .build();
     }

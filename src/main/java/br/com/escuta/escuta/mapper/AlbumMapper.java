@@ -23,6 +23,11 @@ public class AlbumMapper {
                 .albumCover(entity.getAlbumCover())
                 .releaseDate(entity.getReleaseDate())
                 .description(entity.getDescription())
+                .musics(
+                        entity.getMusics().stream()
+                                .map(MusicMapper::toSumaryResponse)
+                                .toList()
+                )
                 .build();
     }
 

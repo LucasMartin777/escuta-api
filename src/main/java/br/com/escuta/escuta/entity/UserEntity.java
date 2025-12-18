@@ -5,6 +5,7 @@ import br.com.escuta.escuta.controller.request.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SQLRestriction("is_active = 1")
 public class UserEntity {
 
     @Id

@@ -32,8 +32,7 @@ public class MusicService {
     public MusicDetailsResponse create(MusicRequest request) {
 
         Long userId = authenticationUserService.getAuthenticatedUserId();
-        LoginEntity userLogin = loginRepository.getReferenceById(userId);
-        UserEntity user = userRepository.getReferenceById(userLogin.getId());
+        UserEntity user = userRepository.getReferenceById(userId);
 
 
         GenreEntity genre = genreRepository.findById(request.genreId())

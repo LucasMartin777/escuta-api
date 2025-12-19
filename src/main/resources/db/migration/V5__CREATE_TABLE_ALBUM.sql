@@ -4,9 +4,7 @@ CREATE TABLE albums (
     album_cover VARCHAR(500),
     description VARCHAR(500),
     release_date DATE,
-
     user_id BIGINT NOT NULL,
-
     is_active TINYINT(1) NOT NULL DEFAULT 1,
 
     CONSTRAINT fk_albums_users

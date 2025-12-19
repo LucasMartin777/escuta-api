@@ -4,11 +4,9 @@ CREATE TABLE musics (
     audio_url VARCHAR(500) NOT NULL,
     release_date DATE,
     single_cover VARCHAR(500),
-
     user_id BIGINT NOT NULL,
     genre_id BIGINT,
     album_id BIGINT,
-
     is_active TINYINT(1) NOT NULL DEFAULT 1,
 
     CONSTRAINT fk_musics_users

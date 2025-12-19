@@ -4,10 +4,8 @@ CREATE TABLE users (
     description VARCHAR(500),
     name VARCHAR(255),
     date_of_birth DATE,
-
     is_active TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     login_id BIGINT NOT NULL,
 
     CONSTRAINT fk_users_logins

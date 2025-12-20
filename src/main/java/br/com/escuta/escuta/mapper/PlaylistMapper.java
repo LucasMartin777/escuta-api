@@ -10,7 +10,6 @@ public class PlaylistMapper {
                 .name(request.name())
                 .cover(request.cover())
                 .isPublic(request.isPublic())
-                .registrationDate(request.registrationDate())
                 .build();
     }
 

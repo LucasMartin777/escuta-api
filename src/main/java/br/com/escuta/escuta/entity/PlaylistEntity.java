@@ -47,7 +47,7 @@ public class PlaylistEntity {
     @Builder.Default
     private Boolean isActive = true;
 
-    public void logicalExclusion(PlaylistEntity playlistEntity) {
-        playlistEntity.setIsActive(false);
+    public void logicalExclusion() {
+        this.setIsActive(false);
     }
 }

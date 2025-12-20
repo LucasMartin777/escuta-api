@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -33,15 +34,24 @@ public class PlaylistService {
         Long userId = authenticationUserService.getAuthenticatedUserId();
         UserEntity user = userRepository.getReferenceById(userId);
 
-        List<MusicEntity> musics = musicRepository.findAllById(request.music());
+        PlaylistEntity playlist = PlaylistMapper.toEntity(request);
+        playlist.setUser(user);
 
-        PlaylistEntity playlistEntity = PlaylistMapper.toEntity(request);
-        playlistEntity.setUser(user);
-        playlistEntity.setMusic(musics);
+        if (request.music() != null && !request.music().isEmpty()) {
 
-        return PlaylistMapper.toDetailsResponse(playlistEntity);
+            List<Long> musicIds = request.music().stream()
+                    .filter(Objects::nonNull)
+                    .toList();
 
+            List<MusicEntity> musics = musicRepository.findAllById(musicIds);
+            playlist.setMusic(musics);
+        }
+
+        PlaylistEntity saved = playlistRepository.save(playlist);
+
+        return PlaylistMapper.toDetailsResponse(saved);
     }
+
 
     @Transactional
     public void logicalDelete(Long id) {
@@ -50,6 +60,8 @@ public class PlaylistService {
 
         PlaylistEntity playlistEntity = playlistRepository.findByIdAndUser_Id(id, authenticatedUserId)
                 .orElseThrow(() -> new EntityNotFoundException("Album não encontrada para esse usuario"));
+
+        playlistEntity.logicalExclusion();
 
     }
 }

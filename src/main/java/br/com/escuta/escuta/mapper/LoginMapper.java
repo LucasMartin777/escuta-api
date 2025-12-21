@@ -7,7 +7,6 @@ import br.com.escuta.escuta.entity.LoginEntity;
 public class LoginMapper {
     public static LoginEntity toEntity(LoginRegisterRequest request) {
         return LoginEntity.builder()
-
                 .email(request.email())
                 .password(request.password())
                 .build();

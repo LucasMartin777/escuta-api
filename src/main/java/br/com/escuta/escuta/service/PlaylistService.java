@@ -1,6 +1,7 @@
 package br.com.escuta.escuta.service;
 
 import br.com.escuta.escuta.controller.request.PlaylistRequest;
+import br.com.escuta.escuta.controller.request.PlaylistUpdateRequest;
 import br.com.escuta.escuta.controller.response.PlaylistResponse;
 import br.com.escuta.escuta.entity.MusicEntity;
 import br.com.escuta.escuta.entity.PlaylistEntity;
@@ -52,7 +53,6 @@ public class PlaylistService {
         return PlaylistMapper.toDetailsResponse(saved);
     }
 
-
     @Transactional
     public void logicalDelete(Long id) {
 
@@ -62,6 +62,14 @@ public class PlaylistService {
                 .orElseThrow(() -> new EntityNotFoundException("Album não encontrada para esse usuario"));
 
         playlistEntity.logicalExclusion();
+
+    }
+
+    public void update(Long id, PlaylistUpdateRequest request) {
+        Long authenticatedUserId = authenticationUserService.getAuthenticatedUserId();
+
+        PlaylistEntity playlistEntity = playlistRepository.findByIdAndUser_Id(id, authenticatedUserId)
+                .orElseThrow(() -> new EntityNotFoundException("Album não encontrada para esse usuario"));
 
     }
 }

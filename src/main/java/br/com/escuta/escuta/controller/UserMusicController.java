@@ -33,7 +33,7 @@ public class UserMusicController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MusicDetailsResponse update(@PathVariable Long id,
-                                       @RequestBody @Valid MusicUpdateRequest musicUpdateRequest) {
+                                       @RequestBody MusicUpdateRequest musicUpdateRequest) {
         return musicService.update(id, musicUpdateRequest);
     }
 }

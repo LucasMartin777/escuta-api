@@ -9,9 +9,7 @@ public class GenreMapper {
         return GenreEntity.builder()
                 .name(request.name())
                 .build();
-
     }
-
 
     public static GenreResponse toDetailsResponse(GenreEntity genre) {
         return GenreResponse.builder()

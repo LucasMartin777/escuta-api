@@ -26,7 +26,6 @@ public class MusicMapper {
                                 ? musicEntity.getAlbum().getId()
                                 : null
                 )
-
                 .build();
     }
 
@@ -43,6 +42,4 @@ public class MusicMapper {
                         : null)
                 .build();
     }
-
-
 }

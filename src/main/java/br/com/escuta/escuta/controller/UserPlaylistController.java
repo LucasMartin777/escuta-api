@@ -1,6 +1,7 @@
 package br.com.escuta.escuta.controller;
 
 import br.com.escuta.escuta.controller.request.PlaylistRequest;
+import br.com.escuta.escuta.controller.request.PlaylistUpdateRequest;
 import br.com.escuta.escuta.controller.response.PlaylistResponse;
 import br.com.escuta.escuta.service.PlaylistService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,5 +27,12 @@ public class UserPlaylistController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         playlistService.logicalDelete(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PlaylistResponse update(@PathVariable Long id,
+                                   @RequestBody PlaylistUpdateRequest request) {
+        return playlistService.update(id,request);
     }
 }

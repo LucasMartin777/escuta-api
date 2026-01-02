@@ -29,10 +29,10 @@ public class UserPlaylistController {
         playlistService.logicalDelete(id);
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public PlaylistResponse update(@PathVariable Long id,
-                                   @RequestBody PlaylistUpdateRequest request) {
-        return playlistService.update(id,request);
-    }
+//    @PutMapping("/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public PlaylistResponse update(@PathVariable Long id,
+//                                   @RequestBody PlaylistUpdateRequest request) {
+//        return playlistService.update(id,request);
+//    }
 }

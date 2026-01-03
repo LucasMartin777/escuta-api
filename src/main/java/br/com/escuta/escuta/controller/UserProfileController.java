@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/users/me")
 @SecurityRequirement(name = "bearer-key")
-public class UserController {
+public class UserProfileController {
 
     private final UserService userService;
 

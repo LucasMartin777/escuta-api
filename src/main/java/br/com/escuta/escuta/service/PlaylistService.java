@@ -65,11 +65,11 @@ public class PlaylistService {
 
     }
 
-    public void update(Long id, PlaylistUpdateRequest request) {
-        Long authenticatedUserId = authenticationUserService.getAuthenticatedUserId();
-
-        PlaylistEntity playlistEntity = playlistRepository.findByIdAndUser_Id(id, authenticatedUserId)
-                .orElseThrow(() -> new EntityNotFoundException("Album não encontrada para esse usuario"));
-
-    }
+//    public void update(Long id, PlaylistUpdateRequest request) {
+//        Long authenticatedUserId = authenticationUserService.getAuthenticatedUserId();
+//
+//        PlaylistEntity playlistEntity = playlistRepository.findByIdAndUser_Id(id, authenticatedUserId)
+//                .orElseThrow(() -> new EntityNotFoundException("Album não encontrada para esse usuario"));
+//
+//    }
 }

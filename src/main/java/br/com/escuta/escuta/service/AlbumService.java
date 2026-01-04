@@ -114,8 +114,6 @@ public class AlbumService {
         // ❌ Remove vínculo (ON DELETE SET NULL)
         musicsToRemove.forEach(m -> m.setAlbum(null));
 
-        // 🔹 Atualiza dados do álbum
-        album.update(request);
 
         return AlbumMapper.toDetailsResponse(album);
     }

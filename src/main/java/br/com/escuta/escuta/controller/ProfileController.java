@@ -1,7 +1,9 @@
 package br.com.escuta.escuta.controller;
 
+import br.com.escuta.escuta.controller.response.ProfileResponse;
 import br.com.escuta.escuta.entity.LoginEntity;
 import br.com.escuta.escuta.service.FollowService;
+import br.com.escuta.escuta.service.ProfileService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,23 +17,21 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     private final ProfileService profileService;
-    private final FollowService followService;
+
 
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProfileResponse getProfile(@AuthenticationPrincipal LoginEntity login,
-                                      @PathVariable Long id) {
-        // Passamos o ID do logado para saber se 'EU' sigo 'ELE'
-        return profileService.getPublicProfile(id, login.getUser().getId());
+    public ProfileResponse getProfile(@PathVariable Long id) {
+        return profileService.profileResponse(id);
     }
 
-    // 2. Ação de Seguir
+
     @PostMapping("/{id}/follow")
     @ResponseStatus(HttpStatus.CREATED)
     public void follow(@AuthenticationPrincipal LoginEntity login,
                        @PathVariable Long id) {
-        followService.follow(login.getUser().getId(), id);
+        profileService.follow(login.gigetId(), id);
     }
 
     // 3. Ação de Parar de Seguir

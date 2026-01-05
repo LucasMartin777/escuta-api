@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface FollowProfileRepository extends JpaRepository<FollowProfileEntity, FollowProfileIdEntity> {
 
+    // AJUSTE: Troque 'TargetId' por 'FollowedId'
+    long countByIdFollowedId(Long followedId);
 
-    boolean existsById(FollowProfileIdEntity id);
-
-
-    Optional<FollowProfileEntity> findById(FollowProfileIdEntity id);
+    // Verifique se este também está correto de acordo com sua classe de ID
+    long countByIdFollowerId(Long followerId);
 }

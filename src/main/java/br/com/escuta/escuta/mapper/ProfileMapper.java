@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProfileMapper {
 
-    public static ProfileResponse toUserResponse(UserEntity userEntity) {
+    public static ProfileResponse toProfileResponse(UserEntity userEntity, long followers, long following) {
         return ProfileResponse.builder()
                 .id(userEntity.getId())
                 .userName(userEntity.getName())
@@ -35,6 +35,8 @@ public class ProfileMapper {
                                 .map(AlbumMapper::toSumaryResponse)
                                 .toList()
                 )
+                .followersCount(followers)
+                .followingCount(following)
                 .build();
     }
 }

@@ -11,6 +11,8 @@ public record ProfileResponse(
         String userName,
         String profilePhoto,
         String description,
+        Long followersCount,
+        Long followingCount,
         List<PlaylistResponse> playlists,
         List<MusicSumaryResponse> musicas,
         List<AlbumSumaryResponse> albuns

@@ -7,12 +7,10 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA requires
 @AllArgsConstructor
 @EqualsAndHashCode
 public class FollowProfileIdEntity implements Serializable {
-
     private Long followerId;
-    private Long followingId;
+    private Long followedId;
 }

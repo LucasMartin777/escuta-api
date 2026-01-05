@@ -4,8 +4,6 @@ import br.com.escuta.escuta.controller.response.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,34 +18,36 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse tratarErro404(EntityNotFoundException e, HttpServletRequest request) {
+    public ErrorResponse handleNotFound(EntityNotFoundException e, HttpServletRequest request) {
         return buildErrorResponse(request, e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
-        var erros = ex.getFieldErrors();
-        return ResponseEntity.badRequest().body(erros.stream()
-                .map(DadosErroValidacao::new).toList());
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationError(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        var errors = ex.getFieldErrors().stream()
+                .map(DadosErroValidacao::new)
+                .toList();
+
+        return buildErrorResponse(request, errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY) // 422 é ideal para erros de regra de negócio
+    public ErrorResponse handleBusiness(BusinessException e, HttpServletRequest request) {
+        return buildErrorResponse(request, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorResponse handleBadCredentialsException(
-            BadCredentialsException e, HttpServletRequest request) {
-        return buildErrorResponse(request, e.getMessage(), HttpStatus.UNAUTHORIZED);
+    public ErrorResponse handleUnauthorized(BadCredentialsException e, HttpServletRequest request) {
+        return buildErrorResponse(request, "Credenciais inválidas", HttpStatus.UNAUTHORIZED);
     }
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleAccessDeniedException(
-            AccessDeniedException e,
-            HttpServletRequest request
-    ) {
-        return buildErrorResponse(
-                request,
-                e.getMessage(),
-                HttpStatus.FORBIDDEN
-        );
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleGeneric(Exception e, HttpServletRequest request) {
+        return buildErrorResponse(request, "Ocorreu um erro interno inesperado.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private record DadosErroValidacao(String campo, String mensagem) {
@@ -56,14 +56,12 @@ public class GlobalExceptionHandler {
         }
     }
 
-    private static ErrorResponse buildErrorResponse(
-            HttpServletRequest request, Object errors, HttpStatus httpStatus) {
-
+    private static ErrorResponse buildErrorResponse(HttpServletRequest request, Object message, HttpStatus status) {
         return ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .status(httpStatus.value())
-                .error(httpStatus.getReasonPhrase())
-                .message(errors)
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(message)
                 .path(request.getRequestURI())
                 .build();
     }

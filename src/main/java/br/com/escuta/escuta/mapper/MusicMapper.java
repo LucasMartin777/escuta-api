@@ -3,15 +3,24 @@ package br.com.escuta.escuta.mapper;
 import br.com.escuta.escuta.controller.request.MusicRequest;
 import br.com.escuta.escuta.controller.response.MusicDetailsResponse;
 import br.com.escuta.escuta.controller.response.MusicSumaryResponse;
+import br.com.escuta.escuta.entity.AlbumEntity;
+import br.com.escuta.escuta.entity.GenreEntity;
 import br.com.escuta.escuta.entity.MusicEntity;
+import br.com.escuta.escuta.entity.UserEntity;
 
 public class MusicMapper {
-    public static MusicEntity toEntity(MusicRequest request) {
+    public static MusicEntity toEntity(MusicRequest request,
+                                       UserEntity user,
+                                       GenreEntity genre,
+                                       AlbumEntity album) {
         return MusicEntity.builder()
                 .name(request.name())
                 .audioUrl(request.audioUrl())
                 .releaseDate(request.releaseDate())
                 .singleCover(request.singleCover())
+                .user(user)
+                .genre(genre)
+                .album(album)
                 .build();
     }
 

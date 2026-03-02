@@ -32,29 +32,22 @@ public class MusicService {
     public MusicDetailsResponse create(MusicRequest request) {
 
         Long userId = authenticationUserService.getAuthenticatedUserId();
-        UserEntity user = userRepository.getReferenceById(userId);
-
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("user not found"));
 
         GenreEntity genre = genreRepository.findById(request.genreId())
                 .orElseThrow(() -> new RuntimeException("Genre not found"));
 
-
         AlbumEntity album = null;
         if (request.albumId() != null) {
-            album = albumRepository.findById(request.albumId())
-                    .orElseThrow(() -> new RuntimeException("Album not found"));
+            album = albumRepository.findByIdAndUser_Id(request.albumId(), userId)
+                    .orElseThrow(() -> new EntityNotFoundException("Álbum não encontrado ou não pertence a você"));
         }
 
+        MusicEntity music = MusicMapper.toEntity(request, user, genre, album);
 
-        MusicEntity musicEntity = MusicMapper.toEntity(request);
-        musicEntity.setAlbum(album);
-        musicEntity.setUser(user);
-        musicEntity.setGenre(genre);
-
-        musicRepository.save(musicEntity);
-
-
-        return MusicMapper.toDetailsResponse(musicEntity);
+        musicRepository.save(music);
+        return MusicMapper.toDetailsResponse(music);
     }
 
     @Transactional
